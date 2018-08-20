@@ -24,7 +24,7 @@ public class SectionManagerImpl implements SectionManager{
 
 	private List<Section> mSectionList = new ArrayList<Section>();
 	
-	public int sectionRNum=0;
+//	public int sectionRNum=0;
 
 
 	@Override
@@ -46,20 +46,23 @@ public class SectionManagerImpl implements SectionManager{
 			mNextContinuityCounter[i] = -1;
 		}
 		mSectionList.clear();
-		System.out.println("cursor and  mlist size:"+size);
-		System.out.println("initData");
+//		System.out.println("cursor and  mlist size:"+size);
+//		System.out.println("initData");
 	
 	}
 
 	private int getEffectiveLenth(int packetLength,int skip,int adaptationFieldLength) {
 		int effectiveLength = 0;
+		int adaptation_length = 0 ;
 		
-		
+		if(adaptationFieldLength != 0 ) {
+			adaptation_length = adaptationFieldLength+1;
+		}
 //		判断当前Packet中有效数据长度
 		if (packetLength == PACKET_LENTH_188) {
-			effectiveLength = packetLength - PACKET_HEADER_LENGTH - skip  - adaptationFieldLength-1;
+			effectiveLength = packetLength - PACKET_HEADER_LENGTH - skip  - adaptation_length;
 		}else if(packetLength == PACKET_LENTH_204){
-			effectiveLength = packetLength -PACKET_HEADER_LENGTH -skip - 16 - adaptationFieldLength-1;
+			effectiveLength = packetLength -PACKET_HEADER_LENGTH -skip - 16 - adaptation_length;
 		}
 		return effectiveLength; 
 	}
@@ -80,18 +83,13 @@ public class SectionManagerImpl implements SectionManager{
 			int adaptationFieldControl = p.getAdaptationFieldControl();
 			int coutinuityCounter = p.getContinuityCounter();
 
-			System.out.println("读取到第"+tmp+"个包");
+//			System.out.println("读取到第"+tmp+"个包");
 			
-//			transportErrorIndicator判断当前包是否为有效包
-//			if (transportErrorIndicator == 0x1) {
-//				System.out.println("The packet is Error");
-//				continue;
-//			}
 			int adaptationFieldLength = 0;
 			
 			if( adaptationFieldControl == 3) {
 				adaptationFieldLength = packet[4]&0xff;
-				System.out.println("adaptationFieldLength: "+adaptationFieldLength);
+//				System.out.println("adaptationFieldLength: "+adaptationFieldLength);
 				section_start_position +=adaptationFieldLength+1;
 			}
 //			判断Packet是否为首包
@@ -99,7 +97,6 @@ public class SectionManagerImpl implements SectionManager{
 			if (payloadUnitStartIndicator == 0x1) {
 //				解析表头的数据
 //				当payloadUnitStartIndicator为0x1时，不考虑adaptationFieldControl,从下标为5的字节开始为有效负载
-				System.out.println("section_start_position"+section_start_position);
 				int tableId = packet[section_start_position] & 0xFF;
 				int sectionLength = (((packet[section_start_position + 1] & 0xF) << 8)
 						| (packet[section_start_position + 2] & 0xFF)) & 0xFFF;
@@ -108,7 +105,7 @@ public class SectionManagerImpl implements SectionManager{
 				int lastSectionNumber = packet[section_start_position + 7] & 0xFF;
 				
 				if (tableId != inputTableId) {
-					System.out.println("TableID不一致");
+//					System.out.println("TableID不一致");
 					continue;
 	            }
 				
@@ -124,20 +121,22 @@ public class SectionManagerImpl implements SectionManager{
 					initData(versionNumber, lastSectionNumber);
 				}
 				if(mVersionNumber!=versionNumber) {
-					System.out.println("versionNumber不一致");
+//					System.out.println("versionNumber不一致");
 					initData(versionNumber, lastSectionNumber);
 				}
 				
 //				根据sectionNum判断是否已添加到mList中
-				System.out.println("当前包SectionNumber:"+sectionNumber);
 				int num = mCursor[sectionNumber];
+//				System.out.println("当前包SectionNumber:"+sectionNumber);
+//				System.out.println("num = "+num);
 				
 				if(num == 0 ) {
 //					System.out.println("sectionSize:"+sectionSize);
+//					System.out.println("sectionNumber:=========>"+ sectionNumber);
 					mList[sectionNumber]  = new byte[sectionSize];
 				}else {
-					sectionRNum++;
-					System.out.println("重复包次数："+sectionRNum);
+//					sectionRNum++;
+//					System.out.println("重复包次数："+sectionRNum);
 					continue;
 				}
 				
@@ -153,8 +152,11 @@ public class SectionManagerImpl implements SectionManager{
 						mCursor[sectionNumber]++;
 					}
 					
+					 // -2 表示当前 sectionNumber 的数据已写完
+	                mNextContinuityCounter[sectionNumber] = -2;
+					
 					Section section = new Section(mList[sectionNumber]);
-					System.out.println("加入SectionList");
+//					System.out.println("加入SectionList");
 					mSectionList.add(section);
 				}else {
 //					Packet中数据转入未完整的数组内
@@ -177,11 +179,10 @@ public class SectionManagerImpl implements SectionManager{
 //			非Section首包
 			else {
 				
-				section_start_position--;
+				section_start_position --;
 				
 				if(mVersionNumber == -1) {
-					System.out.println("no versionNumber");
-//					throw new IllegalArgumentException("");
+//					System.out.println("no versionNumber");
 					continue;
 				}
 				
@@ -195,7 +196,7 @@ public class SectionManagerImpl implements SectionManager{
 					}
 				}
 				if(unFinishSectionNumber == -1) {
-					System.out.println("没有未完成组装的");
+//					System.out.println("没有未完成组装的Section__退出");
 					continue;
 				}
 				
@@ -213,9 +214,12 @@ public class SectionManagerImpl implements SectionManager{
 						mCursor[unFinishSectionNumber]++;
 					}
 					
+					 // -2 表示当前 sectionNumber 的数据已写完
+	                mNextContinuityCounter[unFinishSectionNumber] = -2;
+					
 					Section section = new Section(mList[unFinishSectionNumber]);
 					mSectionList.add(section);
-					System.out.println("非首包加入SectionList");
+//					System.out.println("非首包加入SectionList");
 
 				}else {
 					

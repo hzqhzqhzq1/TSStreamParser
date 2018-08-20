@@ -30,9 +30,6 @@ public class PacketManagerImpl implements PacketManager{
 	
 	
 	private int getPacketLengthAndStartPosition() {
-		
-		long startTime = System.currentTimeMillis();
-		
 		File file = new File(inputFilePath);
 		FileInputStream fis = null;
 		try {
@@ -43,7 +40,7 @@ public class PacketManagerImpl implements PacketManager{
 				
 				packetStartPosition++;
 				packetLengthConfirm = false;
-				System.out.println("====当前位置为：===》" + packetStartPosition + "0x" + Integer.toHexString(tmp&0xff));
+//				System.out.println("====当前位置为：===》" + packetStartPosition + "0x" + Integer.toHexString(tmp&0xff));
 				if (tmp == PACKET_HEADER_SYNC_BYTE) {
 					/**
 					 * 循环10次跳188检测是否为0x47
@@ -57,7 +54,7 @@ public class PacketManagerImpl implements PacketManager{
 						}
 						// 读取跳过187字节后的字节
 						tmp = fis.read();
-						System.out.println("====当前已经跳过" + PACKET_LENTH_188 * (i + 1) + "byte");
+//						System.out.println("====当前已经跳过" + PACKET_LENTH_188 * (i + 1) + "byte");
 						// 出现非0x47
 						if (tmp != PACKET_HEADER_SYNC_BYTE) {
 							// 回到循环起始位置
@@ -114,8 +111,6 @@ public class PacketManagerImpl implements PacketManager{
 			}
 			
 		}
-		long endTime = System.currentTimeMillis();
-		System.out.println("Time:"+(endTime - startTime));
 		System.out.println("包长:"+packetLength+"  开始位置为："+packetStartPosition);
 		return  packetLength;
 		

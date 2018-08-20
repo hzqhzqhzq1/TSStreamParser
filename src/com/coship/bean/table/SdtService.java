@@ -5,13 +5,18 @@ public class SdtService {
      * service_id : 16 bit
      */
     private int serviceId;
+    
+    /**
+     * reserved_future_use: 8bit
+     */
+    private int reservedFutureUse;
 
     /**
      * eit_schedule_flag : 1 bit
      */
     private int eitScheduleFlag;
 
-    /**
+	/**
      * eit_present_following_flag : 1 bit
      */
     private int eitPresentFollowingFlag;
@@ -33,9 +38,20 @@ public class SdtService {
 
 
     // descriptor()
-
+//    private Descriptor descriptorList = new Descriptor();
 
     /**
+     * descriptor_tag:8 bit (1 byte)
+     */
+    private int descriptorTag;
+    
+    /**
+     * descriptor_length:8bit (1 byte)
+     */
+    private int descriptorLength;
+    
+    
+	/**
      * service_type : 8 bit (1byte)
      */
     private int serviceType;
@@ -46,7 +62,7 @@ public class SdtService {
     private int serviceProviderNameLength;
 
     /**
-     * service_provider_name : ?
+     * service_provider_name : serviceproviderNamelength
      */
     private String serviceProviderName;
 
@@ -56,7 +72,7 @@ public class SdtService {
     private int serviceNameLength;
 
     /**
-     * service_name : ?
+     * service_name : serviceNameLength
      */
     private String serviceName;
 	
@@ -67,8 +83,11 @@ public class SdtService {
     public SdtService(int serviceId, int eitScheduleFlag, int eitPresentFollowingFlag,
                       int runningStatus, int freeCaMode, int descriptorsLoopLength,
                       int serviceType, int serviceProviderNameLength, String serviceProviderName,
-                      int serviceNameLength, String serviceName) {
+                      int serviceNameLength, String serviceName,int reservedFutureUse,int descriptor_tag,int descriptor_length) {
         super();
+        this.reservedFutureUse = reservedFutureUse;
+        this.descriptorTag = descriptor_tag;
+        this.descriptorLength = descriptor_length;
         this.serviceId = serviceId;
         this.eitScheduleFlag = eitScheduleFlag;
         this.eitPresentFollowingFlag = eitPresentFollowingFlag;
@@ -163,6 +182,15 @@ public class SdtService {
         this.serviceNameLength = serviceNameLength;
     }
 
+    public int getReservedFutureUse() {
+		return reservedFutureUse;
+	}
+
+
+	public void setReservedFutureUse(int reservedFutureUse) {
+		this.reservedFutureUse = reservedFutureUse;
+	}
+
     public String getServiceName() {
         return serviceName;
     }
@@ -170,5 +198,38 @@ public class SdtService {
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
+    
+    public int getDescriptorTag() {
+		return descriptorTag;
+	}
+
+
+	public void setDescriptorTag(int descriptorTag) {
+		this.descriptorTag = descriptorTag;
+	}
+
+
+	public int getDescriptorLength() {
+		return descriptorLength;
+	}
+
+
+	public void setDescriptorLength(int descriptorLength) {
+		this.descriptorLength = descriptorLength;
+	}
+
+
+	@Override
+	public String toString() {
+		return "SdtService [serviceId=" + serviceId + ", reservedFutureUse=" + reservedFutureUse + ", eitScheduleFlag="
+				+ eitScheduleFlag + ", eitPresentFollowingFlag=" + eitPresentFollowingFlag + ", runningStatus="
+				+ runningStatus + ", freeCaMode=" + freeCaMode + ", descriptorsLoopLength=" + descriptorsLoopLength
+				+ ", descriptorTag=" + descriptorTag + ", descriptorLength=" + descriptorLength + ", serviceType="
+				+ serviceType + ", serviceProviderNameLength=" + serviceProviderNameLength + ", serviceProviderName="
+				+ serviceProviderName + ", serviceNameLength=" + serviceNameLength + ", serviceName=" + serviceName
+				+ "]";
+	}
+	
+	
 }
 	

@@ -14,7 +14,7 @@ public class Test {
 		long startTime = System.currentTimeMillis();
 		
 		Ts ts =new Ts(fileFordPath+fileName);
-		Pat pat = ts.getPat();
+//		Pat pat = ts.getPat();
 //		PacketManagerImpl packetManager =  new PacketManagerImpl(fileFordPath+fileName);
 //		for(Map.Entry<Integer, List<Packet>> entry : packetManager.getPacketMap().entrySet()) {
 //			System.out.println("PID:"+entry.getKey()+" "+entry.getValue().size());
@@ -23,7 +23,9 @@ public class Test {
 //		sm.matchSection(packetManager.getPacketOfPid(0x118a),0x02);
 //		sm.matchSection(packetManager.getPacketOfPid(0x116c),0x02);
 //		sm.matchSection(packetManager.getPacketOfPid(0x00),0x0);
-//		TableManager tm = TableParserFactory.createTableManager(0x116c, 0x02);
+//		sm.matchSection(packetManager.getPacketOfPid(0x0011), 0X42);
+////		TableManager tm = TableParserFactory.createTableManager(0x116c, 0x02);
+//		TableManager tm = TableParserFactory.createTableManager(0x0011, 0x42);
 //		tm.makeTable(sm.getSectionList());
 		
 		long endTime = System.currentTimeMillis();

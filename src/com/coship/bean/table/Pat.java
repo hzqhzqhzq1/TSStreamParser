@@ -241,11 +241,11 @@ public class Pat {
 
     @Override
 	public String toString() {
-		return "Pat [tableId=" + tableId + ", sectionSyntaxIndicator=" + sectionSyntaxIndicator + ", zero=" + zero
+		return "------- PAT表 -------"+"Pat [tableId=" + tableId + ", sectionSyntaxIndicator=" + sectionSyntaxIndicator + ", zero=" + zero
 				+ ", reserved1=" + reserved1 + ", sectionLength=" + sectionLength + ", transportStreamId="
 				+ transportStreamId + ", reserved2=" + reserved2 + ", versionNumber=" + versionNumber
 				+ ", currentNextIndicator=" + currentNextIndicator + ", sectionNumber=" + sectionNumber
 				+ ", lastSectionNumber=" + lastSectionNumber + ", patProgramList=" + patProgramList + ", reserved3="
-				+ reserved3 + ", networkPid=" + networkPid + ", crc32=" + crc32 + "]";
+				+ reserved3 + ", networkPid=" + networkPid + ", crc32=" + crc32 + "]"+"/n---------------------";
 	}
 }

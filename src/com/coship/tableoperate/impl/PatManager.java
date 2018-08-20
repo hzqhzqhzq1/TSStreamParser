@@ -56,6 +56,7 @@ public class PatManager implements TableManager{
 	};
 	
 	public String print() {
+		System.out.println("--------------------- PAT--------------------------");
 		System.out.println("table_id = 0x"+Integer.toHexString(pat.getTableId()));
 		System.out.println("section_syntax_indicator = 0x"+Integer.toHexString(pat.getSectionSyntaxIndicator()));
 		System.out.println("section_length = 0x"+Integer.toHexString(pat.getSectionLength()));
@@ -69,6 +70,7 @@ public class PatManager implements TableManager{
 		}
 		System.out.println("PMT表PID信息： "+pat.getPatProgramList().toString());
 		System.out.println("CRC_32 = 0x"+Integer.toHexString(pat.getCrc32()));
+		System.out.println("\n-------------------------------------------------\n");
 
 		return null;
 	}

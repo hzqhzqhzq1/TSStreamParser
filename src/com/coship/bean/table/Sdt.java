@@ -66,9 +66,6 @@ public class Sdt {
      * 16 bit
      */
     private int originalNerworkId;
-    
-    
-
 
 	/**
      * 8 bit
@@ -96,8 +93,8 @@ public class Sdt {
         int currentNextIndicator = sectionData[5] & 0x1;
         int sectionNumber = sectionData[6] & 0xFF;
         int lastSectionNumber = sectionData[7] & 0xFF;
-        int originalNerworkId = sectionData[8] &0xFF;
-        int reservedFutureUse2 = (((sectionData[9]&0xFF)<<8)|(sectionData[10]&0xFF)) & 0xFFFF;
+        int originalNerworkId = ((sectionData[8] &0xFF<<8)|(sectionData[9])&0xff)&0xFFFF;
+        int reservedFutureUse2 = sectionData[10]&0xFF;
         
         int crc32 = (((((sectionData[sectionData.length - 4] & 0xFF)<<8
         		|(sectionData[sectionData.length - 3] & 0xFF))&0xffff)<<16)
@@ -118,6 +115,7 @@ public class Sdt {
         this.lastSectionNumber = lastSectionNumber;
         this.originalNerworkId = originalNerworkId;
         this.reservedFutureUse2 = reservedFutureUse2;
+        
         this.crc32 = crc32;
     }
 
@@ -239,6 +237,17 @@ public class Sdt {
 
 	public void setCrc32(int crc32) {
 		this.crc32 = crc32;
+	}
+
+	@Override
+	public String toString() {
+		return "Sdt [tableId=" + tableId + ", sectionSyntaxIndicator=" + sectionSyntaxIndicator
+				+ ", reservedFutureUse1=" + reservedFutureUse1 + ", reserved1=" + reserved1 + ", sectionLength="
+				+ sectionLength + ", transportStreamId=" + transportStreamId + ", reserved2=" + reserved2
+				+ ", versionNumber=" + versionNumber + ", currentNextIndicator=" + currentNextIndicator
+				+ ", sectionNumber=" + sectionNumber + ", lastSectionNumber=" + lastSectionNumber
+				+ ", originalNerworkId=" + originalNerworkId + ", reservedFutureUse2=" + reservedFutureUse2
+				+ ", sdtServiceList=" + sdtServiceList + ", crc32=" + crc32 + "]";
 	}
     
     

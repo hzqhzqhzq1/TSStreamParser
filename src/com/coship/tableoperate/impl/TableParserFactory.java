@@ -30,12 +30,14 @@ public class TableParserFactory {
 		switch(pid) {
 		case PAT_PID:
 			return new PatManager();
-//			TODO
 		case SDT_PID:
 			if(tableId==SDT_TABLE_ID) {
 				return new SdtManager();
 			}
 		default:
+			if(tableId == PMT_TABLE_ID) {
+				return new PmtManager();
+			}
 			return null;
 		}
 	}
