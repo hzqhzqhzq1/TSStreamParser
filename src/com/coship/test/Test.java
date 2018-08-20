@@ -14,6 +14,9 @@ public class Test {
 		long startTime = System.currentTimeMillis();
 		
 		Ts ts =new Ts(fileFordPath+fileName);
+		ts.getPmtList();
+		
+		
 //		Pat pat = ts.getPat();
 //		PacketManagerImpl packetManager =  new PacketManagerImpl(fileFordPath+fileName);
 //		for(Map.Entry<Integer, List<Packet>> entry : packetManager.getPacketMap().entrySet()) {

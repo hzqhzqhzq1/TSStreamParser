@@ -1,5 +1,6 @@
 package com.coship.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +18,8 @@ import com.coship.tsoperate.SectionManager;
 import com.coship.tsoperate.impl.PacketManagerImpl;
 import com.coship.tsoperate.impl.SectionManagerImpl;
 
-public class Ts {
+public class Ts implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private static final int PAT_PID = 0X0000;
 	private static final int PAT_TABLE_ID = 0X00;
 	private static final int SDT_PID = 0X0011;
@@ -42,6 +44,7 @@ public class Ts {
 		/**
 		 * PAT
 		 */
+		
 		PatManager patManager = (PatManager) TableParserFactory.createTableManager(PAT_PID, PAT_TABLE_ID);
 		patManager.makeTable(sectionManager.matchSection(packetManager.getPacketOfPid(PAT_PID), PAT_TABLE_ID));
 		this.pat = patManager.getPat();

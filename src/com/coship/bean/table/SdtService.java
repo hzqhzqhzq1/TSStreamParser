@@ -1,5 +1,7 @@
 package com.coship.bean.table;
 
+import java.util.List;
+
 public class SdtService {
     /**
      * service_id : 16 bit
@@ -76,11 +78,11 @@ public class SdtService {
      */
     private String serviceName;
 	
-	
+	private List<Descriptor> descriptorList;
 	
 
 
-    public SdtService(int serviceId, int eitScheduleFlag, int eitPresentFollowingFlag,
+	public SdtService(int serviceId, int eitScheduleFlag, int eitPresentFollowingFlag,
                       int runningStatus, int freeCaMode, int descriptorsLoopLength,
                       int serviceType, int serviceProviderNameLength, String serviceProviderName,
                       int serviceNameLength, String serviceName,int reservedFutureUse,int descriptor_tag,int descriptor_length) {
@@ -99,6 +101,8 @@ public class SdtService {
         this.serviceProviderName = serviceProviderName;
         this.serviceNameLength = serviceNameLength;
         this.serviceName = serviceName;
+        
+//        TODO:BND
     }
 
 
@@ -218,16 +222,38 @@ public class SdtService {
 		this.descriptorLength = descriptorLength;
 	}
 
+	
+
+    public List<Descriptor> getDescriptor() {
+		return descriptorList;
+	}
+
+
+	public void setDescriptor(List<Descriptor> descriptorList) {
+		this.descriptorList = descriptorList;
+	}
+	
 
 	@Override
 	public String toString() {
-		return "SdtService [serviceId=" + serviceId + ", reservedFutureUse=" + reservedFutureUse + ", eitScheduleFlag="
-				+ eitScheduleFlag + ", eitPresentFollowingFlag=" + eitPresentFollowingFlag + ", runningStatus="
-				+ runningStatus + ", freeCaMode=" + freeCaMode + ", descriptorsLoopLength=" + descriptorsLoopLength
-				+ ", descriptorTag=" + descriptorTag + ", descriptorLength=" + descriptorLength + ", serviceType="
-				+ serviceType + ", serviceProviderNameLength=" + serviceProviderNameLength + ", serviceProviderName="
-				+ serviceProviderName + ", serviceNameLength=" + serviceNameLength + ", serviceName=" + serviceName
-				+ "]";
+		if(!descriptorList.isEmpty()) {
+			return "\nSdtService [serviceId=" + serviceId + ", reservedFutureUse=" + reservedFutureUse + ", eitScheduleFlag="
+					+ eitScheduleFlag + ", eitPresentFollowingFlag=" + eitPresentFollowingFlag + ", runningStatus="
+					+ runningStatus + ", freeCaMode=" + freeCaMode + ", descriptorsLoopLength=" + descriptorsLoopLength
+					+ ", descriptorTag=" + descriptorTag + ", descriptorLength=" + descriptorLength + ", serviceType="
+					+ serviceType + ", serviceProviderNameLength=" + serviceProviderNameLength + ", serviceProviderName="
+					+ serviceProviderName + ", serviceNameLength=" + serviceNameLength + ", serviceName=" + serviceName
+					+ "\nbouquet_name_descriptor----\n"+descriptorList.toString()+"]";
+		}else {
+			return "\nSdtService [serviceId=" + serviceId + ", reservedFutureUse=" + reservedFutureUse + ", eitScheduleFlag="
+					+ eitScheduleFlag + ", eitPresentFollowingFlag=" + eitPresentFollowingFlag + ", runningStatus="
+					+ runningStatus + ", freeCaMode=" + freeCaMode + ", descriptorsLoopLength=" + descriptorsLoopLength
+					+ ", descriptorTag=" + descriptorTag + ", descriptorLength=" + descriptorLength + ", serviceType="
+					+ serviceType + ", serviceProviderNameLength=" + serviceProviderNameLength + ", serviceProviderName="
+					+ serviceProviderName + ", serviceNameLength=" + serviceNameLength + ", serviceName=" + serviceName
+					+ "]";
+		}
+		
 	}
 	
 	
