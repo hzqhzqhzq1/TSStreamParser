@@ -2,11 +2,23 @@ package com.coship.bean;
 
 public class Program {
 	private int pid;
-	private int program_number;
+	private int programNumber;
 	private String programName;
 	private String programType;
 	private String programGroup;
 	private String programDescription;
+	
+	public Program(int pid,int programNumber) {
+		this.pid = pid;
+		this.programNumber = programNumber;
+		String unKnown = "unknown";
+		this.programName = unKnown;
+		this.programType = unKnown;
+		this.programGroup = unKnown;
+		this.programDescription = unKnown;
+	}
+	
+	
 	
 	public int getPid() {
 		return pid;
@@ -14,11 +26,11 @@ public class Program {
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
-	public int getProgram_number() {
-		return program_number;
+	public int getProgramNumber() {
+		return programNumber;
 	}
-	public void setProgram_number(int program_number) {
-		this.program_number = program_number;
+	public void setProgramNumber(int programNumber) {
+		this.programNumber = programNumber;
 	}
 	public String getProgramName() {
 		return programName;
@@ -47,7 +59,7 @@ public class Program {
 	
 	@Override
 	public String toString() {
-		return "Program [节目Pid=" + pid + ", 节目号=" + program_number + ", 节目名称=" + programName
+		return "[ 节目Pid=" + pid + ", 节目号=" + programNumber + ", 节目名称=" + programName
 				+ ", 节目类型=" + programType + ", 节目分组=" + programGroup + ", 节目描述="
 				+ programDescription + "]";
 	}

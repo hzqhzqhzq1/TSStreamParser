@@ -2,6 +2,7 @@ package com.coship.tableoperate.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.coship.bean.Section;
@@ -55,28 +56,27 @@ public class SdtManager implements TableManager {
 				int runningStatus = (sectionData[14 + j] >> 5) & 0x7;
 				int freeCaMode = (sectionData[14 + j] >> 4) & 0x1;
 				int descriptorsLoopLength = (((sectionData[14 + j] & 0xF) << 8) | (sectionData[15 + j] & 0xFF)) & 0xFFF;
-				System.out.println("descriptorsLoopLength ====>"+descriptorsLoopLength);
 				int descriptor_tag = sectionData[16 + j] & 0xff;
 				int descriptor_length = sectionData[17 + j] & 0xFF;
 				int serviceType = sectionData[18 + j] & 0xFF;
 				int serviceProviderNameLength = sectionData[19 + j] & 0xFF;
 
-//				if(serviceProviderNameLength!=0) {
-//					
-//				}
 				byte[] strBytes = new byte[serviceProviderNameLength];
-
-//				System.out.println(sectionData.length);
-
-				for (int n = 0; n < serviceProviderNameLength; n++) {
-					strBytes[n] = sectionData[20 + j + n];
+				String serviceProviderName = "未知";
+				StringBuilder stringBuilder = new StringBuilder();
+				if (serviceProviderNameLength != 0) {
+					for (int n = 0; n < serviceProviderNameLength; n++) {
+						strBytes[n] = sectionData[20 + j + n];
+					}
+					try {
+						stringBuilder.append(new String(strBytes, "GBK") + " [ 原始数据 ：0x" + byte2hex(strBytes) + " ]");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					serviceProviderName = stringBuilder.toString();
 				}
-				String serviceProviderName = null;
-				try {
-					serviceProviderName = new String(strBytes, "GBK");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
+
+				stringBuilder.delete(0, stringBuilder.length());
 
 				int serviceNameLength = sectionData[20 + serviceProviderNameLength + j] & 0xFF;
 
@@ -85,74 +85,53 @@ public class SdtManager implements TableManager {
 				for (int n = 0; n < serviceNameLength; n++) {
 					strBytes[n] = sectionData[21 + serviceProviderNameLength + j + n];
 				}
-
-				String serviceName = null;
-
 				try {
-					serviceName = new String(strBytes, "GBK");
+					stringBuilder.append(new String(strBytes, "GBK") + " [ 原始数据 ：0x" + byte2hex(strBytes) + " ]");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
+				String serviceName = stringBuilder.toString();
+				stringBuilder.delete(0, stringBuilder.length());
 
-//				System.out.println("bouquet_name_Tag_======>"
-//						+ sectionData[21 + serviceProviderNameLength + serviceNameLength + j]);
-//				System.out.println("serviceProviderNameLength"+serviceProviderNameLength);
-//				System.out.println("serviceNameLength"+serviceNameLength);
-//				System.out.println("j===>"+j);
-				
-				for(int k= 0 ;k<(descriptorsLoopLength-(serviceProviderNameLength+serviceNameLength+5));) {
-//					将K去掉可以获取全部Descriptor信息
-//					if (sectionData[21 + serviceProviderNameLength + serviceNameLength + j] == 0x47) {
-						
-						int descriptorTag = sectionData[21 + serviceProviderNameLength + serviceNameLength + j+k] & 0xff;
-						int descriptorLength = sectionData[22 + serviceProviderNameLength + serviceNameLength + j+k] & 0xff;
-						strBytes = new byte[descriptorLength];
-						for (int m = 0; m < descriptorLength; m++) {
-							strBytes[m] = sectionData[23 + serviceProviderNameLength + serviceNameLength + j+m+k];
-						}
-						String data = null;
+				for (int k = 0; k < (descriptorsLoopLength - (serviceProviderNameLength + serviceNameLength + 5));) {
+//					只获取bouquet_descriptor的信息
+//					if (sectionData[21 + serviceProviderNameLength + serviceNameLength + j+k] == 0x47) {
+
+					int descriptorTag = sectionData[21 + serviceProviderNameLength + serviceNameLength + j + k] & 0xff;
+					int descriptorLength = sectionData[22 + serviceProviderNameLength + serviceNameLength + j + k]
+							& 0xff;
+					strBytes = new byte[descriptorLength];
+					for (int m = 0; m < descriptorLength; m++) {
+						strBytes[m] = sectionData[23 + serviceProviderNameLength + serviceNameLength + j + m + k];
+					}
+					String data = null;
+					if (descriptorTag == 0x92) {
 						try {
 							data = new String(strBytes, "GBK");
 						} catch (UnsupportedEncodingException e) {
 							e.printStackTrace();
 						}
-						Descriptor bouquetNameDescriptor = new Descriptor(descriptorTag,
-								descriptorLength, data);
-						System.out.println("=====生成Bouquet_Name_des======");
-						bNDescriptorList.add(bouquetNameDescriptor);
-						k=k+2+descriptorLength;
+					} else {
+						try {
+							stringBuilder
+									.append(new String(strBytes, "GBK") + " [ 原始数据 ：0x" + byte2hex(strBytes) + " ]");
+
+						} catch (UnsupportedEncodingException e) {
+							e.printStackTrace();
+						}
+						data = stringBuilder.toString();
+					}
+
+					stringBuilder.delete(0, stringBuilder.length());
+
+					Descriptor bouquetNameDescriptor = new Descriptor(descriptorTag, descriptorLength, data);
+					bNDescriptorList.add(bouquetNameDescriptor);
+					k = k + 2 + descriptorLength;
 //					} else {
 //						System.out.println("no bouquet Name");
 //						break;
 //					}
 				}
-				
-				
-//				for (int k = (21 + serviceProviderNameLength + serviceNameLength + j); k <(descriptorsLoopLength-(21 + serviceProviderNameLength + serviceNameLength + j)) ;) {
-//					if (sectionData[k] == 0x47) {
-//						System.out.println("1111111111111111111");
-//						int descriptorTag = sectionData[k] & 0xff;
-//						int descriptorLength = sectionData[k + 1] & 0xff;
-//						strBytes = new byte[descriptorLength];
-//						for (int m = 0; m < descriptorLength; m++) {
-//							strBytes[m] = sectionData[k + 2 + m];
-//						}
-//						String bouquetName = null;
-//						try {
-//							bouquetName = new String(strBytes, "GBK");
-//						} catch (UnsupportedEncodingException e) {
-//							e.printStackTrace();
-//						}
-//						BouquetNameDescriptor bouquetNameDescriptor = new BouquetNameDescriptor(descriptorTag,
-//								descriptorLength, bouquetName);
-//						System.out.println("=====生成Bouquet_Name_des======");
-//						bNDescriptorList.add(bouquetNameDescriptor);
-//						k=k+2+descriptorLength;
-//					} else {
-//						System.out.println("no bouquet Name");
-//						break;
-//					}
-//				}
 
 				SdtService sdtService = new SdtService(serviceId, eitScheduleFlag, eitPresentFollowingFlag,
 						runningStatus, freeCaMode, descriptorsLoopLength, serviceType, serviceProviderNameLength,
@@ -163,12 +142,11 @@ public class SdtManager implements TableManager {
 				sdtServiceList.add(sdtService);
 
 				j += (5 + descriptorsLoopLength);
-//				System.out.println("descriptorsLoopLength:"+ descriptorsLoopLength);
 
 			}
 		}
+		Collections.sort(sdtServiceList);
 		sdt.setSdtServiceList(sdtServiceList);
-		print();
 		return 0;
 	}
 
@@ -176,14 +154,22 @@ public class SdtManager implements TableManager {
 		return sdt;
 	}
 
-	private String print() {
-		System.out.println(sdt.toString());
+	private static String byte2hex(byte[] buffer) {
+		String h = "";
 
-//		for (int i = 0; i < sdt.getSdtServiceList().size(); i++) {
-//			System.out.println("serviceType = 0x" +  sdt.getSdtServiceList().get(i).getServiceType());
-//			System.out.println("第" + (i + 1) + "个节目的ServiceName: = " + sdt.getSdtServiceList().get(i).getServiceName());
-//		}
-		return sdt.getSdtServiceList().get(0).getServiceName();
+		for (int i = 0; i < buffer.length; i++) {
+			String temp = Integer.toHexString(buffer[i] & 0xFF);
+			if (temp.length() == 1) {
+				temp = "0" + temp;
+			}
+			h = h + " " + temp;
+		}
+		return h;
 	}
+
+//	private String print() {
+//		System.out.println(sdt.toString());
+//		return sdt.getSdtServiceList().get(0).getServiceName();
+//	}
 
 }

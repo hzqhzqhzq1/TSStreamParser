@@ -10,11 +10,11 @@ public interface PacketManager {
 	static final int PACKET_LENTH_204 = 204;
 	static final int CYCLE_TEN_TIMES = 10;
 
-//	private int getPacketLength() {
+//	int getPacketLength() {
 //		return 0;
 //	}
 
-//	 int getPacketStartPositon();
+//	int getPacketStartPositon();
 
 //	HashMap<Integer, List<Packet>> getPacket();
 

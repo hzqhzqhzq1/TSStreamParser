@@ -42,8 +42,8 @@ public class Descriptor {
 
 	@Override
 	public String toString() {
-		return "\nDescriptor [descriptor_tag= 0x" + toHexString(descriptor_tag) + ", descriptor_length= 0x" + toHexString(descriptor_length)
-				+ ", data=" + data + "]";
+		return "		[descriptor_tag= 0x" + toHexString(descriptor_tag) + "\n		descriptor_length= 0x" + toHexString(descriptor_length)
+				+ "\n		data=" + data + "]\n";
 	}
 	
 }

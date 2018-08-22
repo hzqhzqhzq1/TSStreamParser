@@ -186,57 +186,6 @@ public class PacketManagerImpl implements PacketManager{
 				}
 			}
 		}
-		
-		
-		
-		
-//		try {
-// 			fis = new FileInputStream(inputFilePath);
-//			
-//			if (fis.skip(packetStartPosition)!= packetStartPosition) {
-//				System.out.println("packetStartPosition:"+packetStartPosition);
-//				throw new IllegalArgumentException("skip to packetStartPosition has problem! ");
-//			}
-//			
-//			int tmp;
-////			int packetNum = 0;
-//			
-//			do {
-//				byte[] buff = new byte[packetLength];
-//				tmp = fis.read(buff);
-//				if (tmp == packetLength) {
-//					if (buff[0] == PACKET_HEADER_SYNC_BYTE) {
-////						packetNum++;
-//						Packet packet = new Packet(buff);
-//						if (packet.getTransportErrorIndicator() == 1) {
-//                            continue;
-//                        }
-//						if(!packetMap.containsKey(packet.getPid())) {
-//							List<Packet> list = new ArrayList<Packet>();
-//							list.add(packet);
-//							packetMap.put(packet.getPid(), list);
-//						}else{
-//							packetMap.get(packet.getPid()).add(packet);
-//						}
-//					}
-//				}
-//			} while (tmp != -1);
-////			System.out.println("packetNum:" + packetNum);
-////			System.out.println("List长度：" + packetList.size());
-//			fis.close();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}finally {
-//			if(fis != null) {
-//				try {
-//					fis.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
 		long endTime = System.currentTimeMillis();
 		System.out.println("执行时间为："+(endTime - startTime)+"ms");
 		return packetMap;

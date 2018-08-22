@@ -9,14 +9,14 @@ import com.coship.tsoperate.SectionManager;
 
 public class SectionManagerImpl implements SectionManager{
 	public static final int PACKET_HEADER_LENGTH = 4;
-	public  int section_start_position = 5;
-//	public  int section_start_position_2 = 4;
 	public static final int PACKET_LENTH_188 = 188;
 	public static final int PACKET_LENTH_204 = 204;
 	public static final int SKIP_ONE = 1;
 	
 //	初始化VersionNumer
 	private int mVersionNumber = -1;
+//	初始化段有效数据开始下标
+	private  int section_start_position = 5;
 	
 	private byte[][] mList;
 	private int[] mCursor;
@@ -24,16 +24,11 @@ public class SectionManagerImpl implements SectionManager{
 
 	private List<Section> mSectionList = new ArrayList<Section>();
 	
-//	public int sectionRNum=0;
-
-
 	@Override
 	public List<Section> getSectionList() {
 		return mSectionList;
 	}
 
-
-	
 	private void initData(int versionNumber,int lastSectionNumber) {
 		int size = lastSectionNumber + 1;
 		
@@ -70,6 +65,9 @@ public class SectionManagerImpl implements SectionManager{
 
 	@Override
 	public List<Section> matchSection(List<Packet> packetList,int inputTableId) {
+		if(packetList==null) {
+			return null;
+		}
 		for(int tmp = 0;tmp<packetList.size();tmp++) {
 			section_start_position = 5;
 			Packet p = packetList.get(tmp);
@@ -146,7 +144,6 @@ public class SectionManagerImpl implements SectionManager{
 //					包有效数据长度大于段
 //					按段长度读取
 					for(int i =0;i<sectionSize;i++) {
-//						System.out.println(i);
 						mList[sectionNumber][i] = packet[section_start_position+i];
 //						记录当前sectionNumber已经读入了多少个字节
 						mCursor[sectionNumber]++;

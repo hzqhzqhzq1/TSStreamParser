@@ -1,5 +1,6 @@
 package com.coship.bean;
 
+
 public class Section {
 //	8bit
 	private int tableId;
@@ -143,4 +144,23 @@ public class Section {
 	public void setSectionData(byte[] sectionData) {
 		this.sectionData = sectionData;
 	}
+	
+	private static String byte2hex(byte [] buffer){  
+        String h = "";  
+          
+        for(int i = 0; i < buffer.length; i++){  
+            String temp = Integer.toHexString(buffer[i] & 0xFF);  
+            if(temp.length() == 1){  
+                temp = "0" + temp;  
+            }  
+            h = h + " "+ temp;  
+        }  
+        return h;  
+    }  
+
+	@Override
+	public String toString() {
+		return byte2hex(sectionData);
+	}
+
 }
