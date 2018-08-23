@@ -6,19 +6,19 @@ import java.util.Collections;
 import java.util.List;
 
 import com.coship.bean.table.Pat;
-import com.coship.bean.table.PatProgram;
+import com.coship.bean.table.PmtPidInfo;
 import com.coship.bean.table.Pmt;
 import com.coship.bean.table.Sdt;
+import com.coship.packetoperate.PacketManager;
+import com.coship.packetoperate.impl.PacketManagerImpl;
 import com.coship.programoperate.ProgramManager;
 import com.coship.programoperate.impl.ProgramMangerImpl;
+import com.coship.sectionoperate.SectionManager;
+import com.coship.sectionoperate.impl.SectionManagerImpl;
+import com.coship.tableoperate.TableManagerFactory;
 import com.coship.tableoperate.impl.PatManager;
 import com.coship.tableoperate.impl.PmtManager;
 import com.coship.tableoperate.impl.SdtManager;
-import com.coship.tableoperate.impl.TableParserFactory;
-import com.coship.tsoperate.PacketManager;
-import com.coship.tsoperate.SectionManager;
-import com.coship.tsoperate.impl.PacketManagerImpl;
-import com.coship.tsoperate.impl.SectionManagerImpl;
 
 public class Ts implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -42,7 +42,7 @@ public class Ts implements Serializable{
 		 * PAT
 		 */
 		SectionManager patSectionManager = new SectionManagerImpl();
-		PatManager patManager = (PatManager) TableParserFactory.createTableManager(PAT_PID, PAT_TABLE_ID);
+		PatManager patManager = (PatManager) TableManagerFactory.createTableManager(PAT_PID, PAT_TABLE_ID);
 		patManager.makeTable(patSectionManager.matchSection(packetManager.getPacketOfPid(PAT_PID), PAT_TABLE_ID));
 		this.pat = patManager.getPat();
 		System.out.println(pat.toString());
@@ -55,9 +55,9 @@ public class Ts implements Serializable{
 		SectionManager pmtSectionManager =null;
 		List<Section> sectionList = null;
 		pmtList = new ArrayList<Pmt>();
-		for(PatProgram p:pat.getPatProgramList()) {
+		for(PmtPidInfo p:pat.getPmtPidInfoList()) {
 			pmtSectionManager = new SectionManagerImpl();
-			pmtManager = (PmtManager) TableParserFactory.createTableManager(p.getProgramMapPid(), PMT_TABLE_ID);
+			pmtManager = (PmtManager) TableManagerFactory.createTableManager(p.getProgramMapPid(), PMT_TABLE_ID);
 			sectionList = pmtSectionManager.matchSection(packetManager.getPacketOfPid(p.getProgramMapPid()), PMT_TABLE_ID);
 			if(sectionList!=null) {
 				pmtManager.makeTable(sectionList);
@@ -73,7 +73,7 @@ public class Ts implements Serializable{
 		 * SDT
 		 */
 		SectionManager sdtSectionManager = new SectionManagerImpl();
-		SdtManager sdtManager = (SdtManager) TableParserFactory.createTableManager(SDT_PID, SDT_TABLE_ID);
+		SdtManager sdtManager = (SdtManager) TableManagerFactory.createTableManager(SDT_PID, SDT_TABLE_ID);
 		if(packetManager.getPacketOfPid(SDT_PID)!=null){
 			sdtManager.makeTable(sdtSectionManager.matchSection(packetManager.getPacketOfPid(SDT_PID), SDT_TABLE_ID));
 			
@@ -92,6 +92,7 @@ public class Ts implements Serializable{
 				System.out.println(p.toString());
 			}
 		}
+		
 	}
 
 	public String getInputFilePath() {

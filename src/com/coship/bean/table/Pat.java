@@ -61,7 +61,7 @@ public class Pat {
 	 */
 	private int lastSectionNumber;
 
-	private List<PatProgram> patProgramList = new ArrayList<>();
+	private List<PmtPidInfo> pmtPidInfoList = new ArrayList<>();
 
 	/**
 	 * reserved_3 : 3 bit
@@ -201,12 +201,12 @@ public class Pat {
 		this.lastSectionNumber = lastSectionNumber;
 	}
 
-	public List<PatProgram> getPatProgramList() {
-		return patProgramList;
+	public List<PmtPidInfo> getPmtPidInfoList() {
+		return pmtPidInfoList;
 	}
 
-	public void setPatProgramList(List<PatProgram> patProgramList) {
-		this.patProgramList = patProgramList;
+	public void setPmtPidInfoList(List<PmtPidInfo> pmtPidInfoList) {
+		this.pmtPidInfoList = pmtPidInfoList;
 	}
 
 	public int getReserved3() {
@@ -246,9 +246,9 @@ public class Pat {
 		if (networkPid != 0) {
 			stringBuilder.append("network_Pid = 0x" + toHexString(networkPid) + "\n");
 		}
-		Collections.sort(patProgramList);
+		Collections.sort(pmtPidInfoList);
 		stringBuilder.append("\nPMT表PID信息：\n");
-		for (PatProgram p : patProgramList) {
+		for (PmtPidInfo p : pmtPidInfoList) {
 			stringBuilder.append("节目" + (pmtOrderId++) + ": " + p.toString());
 		}
 		stringBuilder.append("\nCRC_32 = 0x" + toHexString(crc32) + "\n" + "--------------------------------");

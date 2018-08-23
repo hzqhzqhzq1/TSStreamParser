@@ -1,11 +1,11 @@
-package com.coship.tsoperate.impl;
+package com.coship.sectionoperate.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.coship.bean.Packet;
 import com.coship.bean.Section;
-import com.coship.tsoperate.SectionManager;
+import com.coship.sectionoperate.SectionManager;
 
 public class SectionManagerImpl implements SectionManager{
 	public static final int PACKET_HEADER_LENGTH = 4;

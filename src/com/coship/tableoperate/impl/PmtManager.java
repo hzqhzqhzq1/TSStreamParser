@@ -5,13 +5,13 @@ import java.util.List;
 
 import com.coship.bean.Section;
 import com.coship.bean.table.Pmt;
-import com.coship.bean.table.PmtStream;
+import com.coship.bean.table.ElementStream;
 import com.coship.tableoperate.TableManager;
 
 public class PmtManager implements TableManager{
 	private Pmt pmt ;
 	
-	private List<PmtStream> pmtStreamList = new ArrayList<PmtStream>();
+	private List<ElementStream> elementStreamList = new ArrayList<ElementStream>();
 	@Override
 	public int makeTable(List<Section> sectionList) {
 		 for (int i = 0; i < sectionList.size(); i++) {
@@ -45,14 +45,14 @@ public class PmtManager implements TableManager{
 	                int esInfoLength = (((sectionData[pos + 3 + n] & 0xF) << 8) |
 	                        (sectionData[pos + 4 + n] & 0xFF)) & 0xFFF;
 
-	                PmtStream pmtStream = new PmtStream(streamType, elementaryPid, esInfoLength);
-	                pmtStreamList.add(pmtStream);
+	                ElementStream elementStream = new ElementStream(streamType, elementaryPid, esInfoLength);
+	                elementStreamList.add(elementStream);
 
 	                n += (5 + esInfoLength);
 	            }
 	        }
 
-	        pmt.setPmtStreamList(pmtStreamList);
+	        pmt.setElementStreamList(elementStreamList);
 		return 0;
 	}
 	

@@ -1,6 +1,10 @@
 package com.coship.bean;
 
-public class Program {
+import java.io.Serializable;
+
+public class Program implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private int pid;
 	private int programNumber;
 	private String programName;

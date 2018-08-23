@@ -1,8 +1,10 @@
-package com.coship.tableoperate.impl;
+package com.coship.tableoperate;
 
-import com.coship.tableoperate.TableManager;
+import com.coship.tableoperate.impl.PatManager;
+import com.coship.tableoperate.impl.PmtManager;
+import com.coship.tableoperate.impl.SdtManager;
 
-public class TableParserFactory {
+public class TableManagerFactory {
 	private static final int PAT_PID=0X0000;
 //	private static final int PAT_TABLE_ID=0X00;
 

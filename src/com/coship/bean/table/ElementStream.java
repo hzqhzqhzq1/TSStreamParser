@@ -2,7 +2,7 @@ package com.coship.bean.table;
 
 import static java.lang.Integer.toHexString;
 
-public class PmtStream {
+public class ElementStream {
 
 	/**
 	 * stream_type : 8 bit
@@ -20,7 +20,7 @@ public class PmtStream {
 	 */
 	private int esInfoLength;
 
-	public PmtStream(int streamType, int elementaryPid, int esInfoLength) {
+	public ElementStream(int streamType, int elementaryPid, int esInfoLength) {
 		super();
 		this.streamType = streamType;
 		this.esPid = elementaryPid;

@@ -1,6 +1,6 @@
 package com.coship.bean.table;
 
-public class PatProgram implements Comparable<PatProgram> {
+public class PmtPidInfo implements Comparable<PmtPidInfo> {
 	/**
 	 * program_number : 16 bit
 	 */
@@ -11,7 +11,7 @@ public class PatProgram implements Comparable<PatProgram> {
 	 */
 	private int programMapPid;
 
-	public PatProgram(int programNumber, int programMapPid) {
+	public PmtPidInfo(int programNumber, int programMapPid) {
 		super();
 		this.programNumber = programNumber;
 		this.programMapPid = programMapPid;
@@ -34,7 +34,7 @@ public class PatProgram implements Comparable<PatProgram> {
 	}
 
 	@Override
-	public int compareTo(PatProgram o) {
+	public int compareTo(PmtPidInfo o) {
 		return this.programNumber > o.programNumber ? 1 : (this.programNumber == o.programNumber ? 0 : -1);
 	}
 

@@ -8,7 +8,7 @@ import java.util.Map;
 import com.coship.bean.Program;
 import com.coship.bean.table.Descriptor;
 import com.coship.bean.table.Pat;
-import com.coship.bean.table.PatProgram;
+import com.coship.bean.table.PmtPidInfo;
 import com.coship.bean.table.Sdt;
 import com.coship.bean.table.SdtService;
 import com.coship.programoperate.ProgramManager;
@@ -19,11 +19,11 @@ public class ProgramMangerImpl implements ProgramManager {
 	@Override
 	public List<Program> makeProgramList(Pat pat, Sdt sdt) {
 		List<Program> programList = new ArrayList<Program>();
-		List<PatProgram> patProgramList = pat.getPatProgramList();
+		List<PmtPidInfo> pmtPidInfoList = pat.getPmtPidInfoList();
 		List<SdtService> sdtServiceList = sdt.getSdtServiceList();
 		Map<Integer, Program> pm = new HashMap<>();
 
-		for (PatProgram pp : patProgramList) {
+		for (PmtPidInfo pp : pmtPidInfoList) {
 			Program program = new Program(pp.getProgramMapPid(), pp.getProgramNumber());
 			pm.put(pp.getProgramNumber(), program);
 			programList.add(program);
@@ -49,7 +49,6 @@ public class ProgramMangerImpl implements ProgramManager {
 				}
 			}
 		}
-
 		return programList;
 	}
 

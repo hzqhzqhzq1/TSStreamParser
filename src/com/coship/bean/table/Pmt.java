@@ -57,7 +57,7 @@ public class Pmt implements Comparable<Pmt> {
 	 */
 	private int programInfoLength;
 
-	List<PmtStream> pmtStreamList = new ArrayList<>();
+	private List<ElementStream> elementStreamList = new ArrayList<>();
 
 	/**
 	 * CRC_32 : 32 bit
@@ -94,24 +94,6 @@ public class Pmt implements Comparable<Pmt> {
 		this.programInfoLength = programInfoLength;
 		this.crc32 = crc32;
 	}
-
-//	public String print() {
-//		StringBuilder stringBuilder = new StringBuilder();
-//		stringBuilder.append("--------------PMT---------------\n" + "table_id : 0x" + toHexString(tableId) + "\n"
-//				+ "section_syntax_indicator : 0x" + toHexString(sectionSyntaxIndicator) + "\n" + "section_length : 0x"
-//				+ toHexString(sectionLength) + "\n" + "program_number : 0x" + toHexString(programNumber) + "\n"
-//				+ "version_number : 0x" + toHexString(versionNumber) + "\n" + "current_next_indicator : 0x"
-//				+ toHexString(currentNextIndicator) + "\n" + "section_number : 0x" + toHexString(sectionNumber) + "\n"
-//				+ "last_section_number : 0x" + toHexString(lastSectionNumber) + "\n" + "pcr_pid : 0x" + toHexString(pcrPid)
-//				+ "\n" + "program_info_length : 0x" + toHexString(programInfoLength) + "\n");
-//		for (PmtStream pmtStream : pmtStreamList) {
-//			stringBuilder.append(" -- \n" + "esPid : 0x" + toHexString(pmtStream.getesPid()) + "\n" + "streamType : 0x"
-//					+ toHexString(pmtStream.getStreamType()) + "\n" + "esInfoLength : 0x"
-//					+ toHexString(pmtStream.getEsInfoLength()) + "\n");
-//		}
-//		stringBuilder.append("-- \n" + "crc32: 0x" + toHexString(crc32) + "\n---------------------------");
-//		return stringBuilder.toString();
-//	}
 
 	public int getTableId() {
 		return tableId;
@@ -193,12 +175,12 @@ public class Pmt implements Comparable<Pmt> {
 		this.programInfoLength = programInfoLength;
 	}
 
-	public List<PmtStream> getPmtStreamList() {
-		return pmtStreamList;
+	public List<ElementStream> getElementStreamList() {
+		return elementStreamList;
 	}
 
-	public void setPmtStreamList(List<PmtStream> pmtStreamList) {
-		this.pmtStreamList = pmtStreamList;
+	public void setElementStreamList(List<ElementStream> elementStreamList) {
+		this.elementStreamList = elementStreamList;
 	}
 
 	public int getCrc32() {
@@ -225,8 +207,8 @@ public class Pmt implements Comparable<Pmt> {
 				+ toHexString(currentNextIndicator) + "\n" + "section_number : 0x" + toHexString(sectionNumber) + "\n"
 				+ "last_section_number : 0x" + toHexString(lastSectionNumber) + "\n" + "PCR_PID : 0x" + toHexString(pcrPid)
 				+ "\n" + "program_info_length : 0x" + toHexString(programInfoLength) + "\n\n");
-		for (PmtStream pmtStream : pmtStreamList) {
-			stringBuilder.append("单元流" + (esOrderId++) + ": " + pmtStream.toString());
+		for (ElementStream elementStream : elementStreamList) {
+			stringBuilder.append("单元流" + (esOrderId++) + ": " + elementStream.toString());
 		}
 		stringBuilder.append("\n" + "CRC_32: 0x" + toHexString(crc32) + "\n--------------------------------");
 		return stringBuilder.toString();

@@ -5,13 +5,13 @@ import java.util.List;
 
 import com.coship.bean.Section;
 import com.coship.bean.table.Pat;
-import com.coship.bean.table.PatProgram;
+import com.coship.bean.table.PmtPidInfo;
 import com.coship.tableoperate.TableManager;
 
 public class PatManager implements TableManager {
 
 	private Pat pat = null;
-	private List<PatProgram> patProgramList = new ArrayList<PatProgram>();
+	private List<PmtPidInfo> pmtPidInfoList = new ArrayList<PmtPidInfo>();
 
 	@Override
 	public int makeTable(List<Section> sectionList) {
@@ -39,14 +39,13 @@ public class PatManager implements TableManager {
 				} else {
 
 					int programMapPid = (((sectionData[10 + j] & 0x1F) << 8) | (sectionData[11 + j] & 0xFF)) & 0x1FFF;
-					PatProgram patProgram = new PatProgram(programNumber, programMapPid);
-//					patProgram.setOrderId(j / 4 + 1);
-					patProgramList.add(patProgram);
+					PmtPidInfo pmtPidInfo = new PmtPidInfo(programNumber, programMapPid);
+					pmtPidInfoList.add(pmtPidInfo);
 				}
 			}
 		}
 
-		pat.setPatProgramList(patProgramList);
+		pat.setPmtPidInfoList(pmtPidInfoList);
 		return 1;
 	}
 
@@ -54,23 +53,4 @@ public class PatManager implements TableManager {
 		return pat;
 	};
 
-//	public String print() {
-//		System.out.println("--------------------- PAT--------------------------");
-//		System.out.println("table_id = 0x"+Integer.toHexString(pat.getTableId()));
-//		System.out.println("section_syntax_indicator = 0x"+Integer.toHexString(pat.getSectionSyntaxIndicator()));
-//		System.out.println("section_length = 0x"+Integer.toHexString(pat.getSectionLength()));
-//		System.out.println("transport_stream_id = 0x"+Integer.toHexString(pat.getTransportStreamId()));
-//		System.out.println("version_number = 0x"+Integer.toHexString(pat.getVersionNumber()));
-//		System.out.println("current_next_indicator = 0x"+Integer.toHexString(pat.getCurrentNextIndicator()));
-//		System.out.println("section_number = 0x"+Integer.toHexString(pat.getSectionNumber()));
-//		System.out.println("last_section_number = 0x"+Integer.toHexString(pat.getLastSectionNumber()));
-//		if(pat.getNetworkPid() != 0) {
-//			System.out.println("network_pid = 0x"+ Integer.toHexString(pat.getNetworkPid()));
-//		}
-//		System.out.println("PMT表PID信息： "+pat.getPatProgramList().toString());
-//		System.out.println("CRC_32 = 0x"+Integer.toHexString(pat.getCrc32()));
-//		System.out.println("\n-------------------------------------------------\n");
-//
-//		return null;
-//	}
 }

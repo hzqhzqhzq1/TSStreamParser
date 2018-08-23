@@ -1,4 +1,4 @@
-package com.coship.tsoperate.impl;
+package com.coship.packetoperate.impl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.coship.bean.Packet;
-import com.coship.tsoperate.PacketManager;
+import com.coship.packetoperate.PacketManager;
 
 public class PacketManagerImpl implements PacketManager{
 	
