@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * PAT表
+ * @author 910131
+ *
+ */
 public class Pat {
 	/**
 	 * tableId : 8 bit
@@ -110,95 +115,52 @@ public class Pat {
 		this.sectionNumber = sectionNumber;
 		this.lastSectionNumber = lastSectionNumber;
 		this.crc32 = crc32;
-
 	}
-
 	public int getTableId() {
 		return tableId;
 	}
-
-	public void setTableId(int tableId) {
-		this.tableId = tableId;
-	}
-
 	public int getSectionSyntaxIndicator() {
 		return sectionSyntaxIndicator;
 	}
-
-	public void setSectionSyntaxIndicator(int sectionSyntaxIndicator) {
-		this.sectionSyntaxIndicator = sectionSyntaxIndicator;
-	}
-
 	public int getZero() {
 		return zero;
-	}
-
-	public void setZero(int zero) {
-		this.zero = zero;
 	}
 
 	public int getReserved1() {
 		return reserved1;
 	}
 
-	public void setReserved1(int reserved1) {
-		this.reserved1 = reserved1;
-	}
-
 	public int getSectionLength() {
 		return sectionLength;
-	}
-
-	public void setSectionLength(int sectionLength) {
-		this.sectionLength = sectionLength;
 	}
 
 	public int getTransportStreamId() {
 		return transportStreamId;
 	}
 
-	public void setTransportStreamId(int transportStreamId) {
-		this.transportStreamId = transportStreamId;
-	}
 
 	public int getReserved2() {
 		return reserved2;
 	}
 
-	public void setReserved2(int reserved2) {
-		this.reserved2 = reserved2;
-	}
 
 	public int getVersionNumber() {
 		return versionNumber;
 	}
 
-	public void setVersionNumber(int versionNumber) {
-		this.versionNumber = versionNumber;
-	}
+
 
 	public int getCurrentNextIndicator() {
 		return currentNextIndicator;
 	}
 
-	public void setCurrentNextIndicator(int currentNextIndicator) {
-		this.currentNextIndicator = currentNextIndicator;
-	}
 
 	public int getSectionNumber() {
 		return sectionNumber;
 	}
 
-	public void setSectionNumber(int sectionNumber) {
-		this.sectionNumber = sectionNumber;
-	}
-
 	public int getLastSectionNumber() {
 		return lastSectionNumber;
-	}
-
-	public void setLastSectionNumber(int lastSectionNumber) {
-		this.lastSectionNumber = lastSectionNumber;
 	}
 
 	public List<PmtPidInfo> getPmtPidInfoList() {
@@ -224,15 +186,11 @@ public class Pat {
 	public void setNetworkPid(int networkPid) {
 		this.networkPid = networkPid;
 	}
-
+	
 	public int getCrc32() {
 		return crc32;
 	}
-
-	public void setCrc32(int crc32) {
-		this.crc32 = crc32;
-	}
-
+	
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -254,4 +212,5 @@ public class Pat {
 		stringBuilder.append("\nCRC_32 = 0x" + toHexString(crc32) + "\n" + "--------------------------------");
 		return stringBuilder.toString();
 	}
+	
 }

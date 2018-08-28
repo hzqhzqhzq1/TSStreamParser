@@ -1,5 +1,10 @@
 package com.coship.bean.table;
 
+/**
+ * PAT表中的PMTPID信息
+ * @author 910131
+ *
+ */
 public class PmtPidInfo implements Comparable<PmtPidInfo> {
 	/**
 	 * program_number : 16 bit
@@ -21,18 +26,9 @@ public class PmtPidInfo implements Comparable<PmtPidInfo> {
 		return programNumber;
 	}
 
-	public void setProgramNumber(int programNumber) {
-		this.programNumber = programNumber;
-	}
-
 	public int getProgramMapPid() {
 		return programMapPid;
 	}
-
-	public void setProgramMapPid(int programMapPid) {
-		this.programMapPid = programMapPid;
-	}
-
 	@Override
 	public int compareTo(PmtPidInfo o) {
 		return this.programNumber > o.programNumber ? 1 : (this.programNumber == o.programNumber ? 0 : -1);

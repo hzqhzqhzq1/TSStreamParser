@@ -5,6 +5,11 @@ import static java.lang.Integer.toHexString;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * PMT表
+ * @author 910131
+ *
+ */
 public class Pmt implements Comparable<Pmt> {
 
 	/**
@@ -98,81 +103,43 @@ public class Pmt implements Comparable<Pmt> {
 	public int getTableId() {
 		return tableId;
 	}
-
-	public void setTableId(int tableId) {
-		this.tableId = tableId;
-	}
-
 	public int getSectionSyntaxIndicator() {
 		return sectionSyntaxIndicator;
-	}
-
-	public void setSectionSyntaxIndicator(int sectionSyntaxIndicator) {
-		this.sectionSyntaxIndicator = sectionSyntaxIndicator;
 	}
 
 	public int getSectionLength() {
 		return sectionLength;
 	}
 
-	public void setSectionLength(int sectionLength) {
-		this.sectionLength = sectionLength;
-	}
-
 	public int getProgramNumber() {
 		return programNumber;
-	}
-
-	public void setProgramNumber(int programNumber) {
-		this.programNumber = programNumber;
 	}
 
 	public int getVersionNumber() {
 		return versionNumber;
 	}
 
-	public void setVersionNumber(int versionNumber) {
-		this.versionNumber = versionNumber;
-	}
 
 	public int getCurrentNextIndicator() {
 		return currentNextIndicator;
 	}
 
-	public void setCurrentNextIndicator(int currentNextIndicator) {
-		this.currentNextIndicator = currentNextIndicator;
-	}
 
 	public int getSectionNumber() {
 		return sectionNumber;
-	}
-
-	public void setSectionNumber(int sectionNumber) {
-		this.sectionNumber = sectionNumber;
 	}
 
 	public int getLastSectionNumber() {
 		return lastSectionNumber;
 	}
 
-	public void setLastSectionNumber(int lastSectionNumber) {
-		this.lastSectionNumber = lastSectionNumber;
-	}
 
 	public int getPcrPid() {
 		return pcrPid;
 	}
 
-	public void setPcrPid(int pcrPid) {
-		this.pcrPid = pcrPid;
-	}
-
 	public int getProgramInfoLength() {
 		return programInfoLength;
-	}
-
-	public void setProgramInfoLength(int programInfoLength) {
-		this.programInfoLength = programInfoLength;
 	}
 
 	public List<ElementStream> getElementStreamList() {
@@ -185,10 +152,6 @@ public class Pmt implements Comparable<Pmt> {
 
 	public int getCrc32() {
 		return crc32;
-	}
-
-	public void setCrc32(int crc32) {
-		this.crc32 = crc32;
 	}
 
 	@Override

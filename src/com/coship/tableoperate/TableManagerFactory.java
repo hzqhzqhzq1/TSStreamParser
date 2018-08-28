@@ -4,6 +4,11 @@ import com.coship.tableoperate.impl.PatManager;
 import com.coship.tableoperate.impl.PmtManager;
 import com.coship.tableoperate.impl.SdtManager;
 
+/**
+ * 表管理器工厂
+ * @author 910131
+ *
+ */
 public class TableManagerFactory {
 	private static final int PAT_PID=0X0000;
 //	private static final int PAT_TABLE_ID=0X00;

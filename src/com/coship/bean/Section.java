@@ -1,6 +1,11 @@
 package com.coship.bean;
 
 
+/**
+ * 段
+ * @author 910131
+ *
+ */
 public class Section {
 //	8bit
 	private int tableId;
@@ -53,96 +58,48 @@ public class Section {
 		return tableId;
 	}
 
-	public void setTableId(int tableId) {
-		this.tableId = tableId;
-	}
-
 	public int getSectionSyntaxIndicator() {
 		return sectionSyntaxIndicator;
-	}
-
-	public void setSectionSyntaxIndicator(int sectionSyntaxIndicator) {
-		this.sectionSyntaxIndicator = sectionSyntaxIndicator;
 	}
 
 	public int getZero() {
 		return zero;
 	}
 
-	public void setZero(int zero) {
-		this.zero = zero;
-	}
-
 	public int getReserved1() {
 		return reserved1;
-	}
-
-	public void setReserved1(int reserved1) {
-		this.reserved1 = reserved1;
 	}
 
 	public int getSectionLenth() {
 		return sectionLenth;
 	}
 
-	public void setSectionLenth(int sectionLenth) {
-		this.sectionLenth = sectionLenth;
-	}
-
 	public int getTransportStreamId() {
 		return transportStreamId;
-	}
-
-	public void setTransportStreamId(int transportStreamId) {
-		this.transportStreamId = transportStreamId;
 	}
 
 	public int getReserver2() {
 		return reserver2;
 	}
 
-	public void setReserver2(int reserver2) {
-		this.reserver2 = reserver2;
-	}
-
 	public int getVersionNumber() {
 		return versionNumber;
-	}
-
-	public void setVersionNumber(int versionNumber) {
-		this.versionNumber = versionNumber;
 	}
 
 	public int getCurrentNextIndicator() {
 		return currentNextIndicator;
 	}
 
-	public void setCurrentNextIndicator(int currentNextIndicator) {
-		this.currentNextIndicator = currentNextIndicator;
-	}
-
 	public int getSectionNumber() {
 		return sectionNumber;
-	}
-
-	public void setSectionNumber(int sectionNumber) {
-		this.sectionNumber = sectionNumber;
 	}
 
 	public int getLastSectionNumber() {
 		return lastSectionNumber;
 	}
 
-	public void setLastSectionNumber(int lastSectionNumber) {
-		this.lastSectionNumber = lastSectionNumber;
-	}
-
 	public byte[] getSectionData() {
 		return sectionData;
-	}
-
-	public void setSectionData(byte[] sectionData) {
-		this.sectionData = sectionData;
 	}
 	
 	private static String byte2hex(byte [] buffer){  

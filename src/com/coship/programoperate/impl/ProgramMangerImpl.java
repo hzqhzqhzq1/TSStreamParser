@@ -13,6 +13,11 @@ import com.coship.bean.table.Sdt;
 import com.coship.bean.table.SdtService;
 import com.coship.programoperate.ProgramManager;
 
+/**
+ * 节目管理器
+ * @author 910131
+ *
+ */
 public class ProgramMangerImpl implements ProgramManager {
 	List<Program> programList = new ArrayList<Program>();
 

@@ -3,6 +3,11 @@ package com.coship.bean.table;
 import java.util.List;
 import static java.lang.Integer.toHexString;
 
+/**
+ * SDT业务描述
+ * @author 910131
+ *
+ */
 public class SdtService implements Comparable<SdtService>{
 	/**
 	 * service_id : 16 bit
@@ -105,112 +110,57 @@ public class SdtService implements Comparable<SdtService>{
 		return serviceId;
 	}
 
-	public void setServiceId(int serviceId) {
-		this.serviceId = serviceId;
-	}
-
 	public int getEitScheduleFlag() {
 		return eitScheduleFlag;
-	}
-
-	public void setEitScheduleFlag(int eitScheduleFlag) {
-		this.eitScheduleFlag = eitScheduleFlag;
 	}
 
 	public int getEitPresentFollowingFlag() {
 		return eitPresentFollowingFlag;
 	}
 
-	public void setEitPresentFollowingFlag(int eitPresentFollowingFlag) {
-		this.eitPresentFollowingFlag = eitPresentFollowingFlag;
-	}
 
 	public int getRunningStatus() {
 		return runningStatus;
-	}
-
-	public void setRunningStatus(int runningStatus) {
-		this.runningStatus = runningStatus;
 	}
 
 	public int getFreeCaMode() {
 		return freeCaMode;
 	}
 
-	public void setFreeCaMode(int freeCaMode) {
-		this.freeCaMode = freeCaMode;
-	}
-
 	public int getDescriptorsLoopLength() {
 		return descriptorsLoopLength;
-	}
-
-	public void setDescriptorsLoopLength(int descriptorsLoopLength) {
-		this.descriptorsLoopLength = descriptorsLoopLength;
 	}
 
 	public int getServiceType() {
 		return serviceType;
 	}
 
-	public void setServiceType(int serviceType) {
-		this.serviceType = serviceType;
-	}
-
 	public int getServiceProviderNameLength() {
 		return serviceProviderNameLength;
-	}
-
-	public void setServiceProviderNameLength(int serviceProviderNameLength) {
-		this.serviceProviderNameLength = serviceProviderNameLength;
 	}
 
 	public String getServiceProviderName() {
 		return serviceProviderName;
 	}
 
-	public void setServiceProviderName(String serviceProviderName) {
-		this.serviceProviderName = serviceProviderName;
-	}
-
 	public int getServiceNameLength() {
 		return serviceNameLength;
-	}
-
-	public void setServiceNameLength(int serviceNameLength) {
-		this.serviceNameLength = serviceNameLength;
 	}
 
 	public int getReservedFutureUse() {
 		return reservedFutureUse;
 	}
 
-	public void setReservedFutureUse(int reservedFutureUse) {
-		this.reservedFutureUse = reservedFutureUse;
-	}
-
 	public String getServiceName() {
 		return serviceName;
-	}
-
-	public void setServiceName(String serviceName) {
-		this.serviceName = serviceName;
 	}
 
 	public int getDescriptorTag() {
 		return descriptorTag;
 	}
 
-	public void setDescriptorTag(int descriptorTag) {
-		this.descriptorTag = descriptorTag;
-	}
-
 	public int getDescriptorLength() {
 		return descriptorLength;
-	}
-
-	public void setDescriptorLength(int descriptorLength) {
-		this.descriptorLength = descriptorLength;
 	}
 
 	public List<Descriptor> getDescriptor() {
@@ -244,15 +194,6 @@ public class SdtService implements Comparable<SdtService>{
 				stringBuilder.append(d.toString());
 			}
 			stringBuilder.append("\n");
-
-//			return "[serviceId=" + serviceId + ", reservedFutureUse=" + reservedFutureUse + ", eitScheduleFlag="
-//					+ eitScheduleFlag + ", eitPresentFollowingFlag=" + eitPresentFollowingFlag + ", runningStatus="
-//					+ runningStatus + ", freeCaMode=" + freeCaMode + ", descriptorsLoopLength=" + descriptorsLoopLength
-//					+ ", descriptorTag=" + descriptorTag + ", descriptorLength=" + descriptorLength + ", serviceType="
-//					+ serviceType + ", serviceProviderNameLength=" + serviceProviderNameLength
-//					+ ", serviceProviderName=" + serviceProviderName + ", serviceNameLength=" + serviceNameLength
-//					+ ", serviceName=" + serviceName + "\nbouquet_name_descriptor----\n" + descriptorList.toString()
-//					+ "]\n";
 			return stringBuilder.toString();
 
 		} else {

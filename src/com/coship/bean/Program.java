@@ -2,6 +2,11 @@ package com.coship.bean;
 
 import java.io.Serializable;
 
+/**
+ * 节目信息
+ * @author 910131
+ *
+ */
 public class Program implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

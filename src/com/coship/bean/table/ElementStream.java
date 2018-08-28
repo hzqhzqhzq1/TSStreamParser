@@ -2,6 +2,12 @@ package com.coship.bean.table;
 
 import static java.lang.Integer.toHexString;
 
+/**
+ * PMT表单元流
+ * 
+ * @author 910131
+ *
+ */
 public class ElementStream {
 
 	/**
@@ -31,24 +37,12 @@ public class ElementStream {
 		return streamType;
 	}
 
-	public void setStreamType(int streamType) {
-		this.streamType = streamType;
-	}
-
 	public int getesPid() {
 		return esPid;
 	}
 
-	public void setEsPid(int esPid) {
-		this.esPid = esPid;
-	}
-
 	public int getEsInfoLength() {
 		return esInfoLength;
-	}
-
-	public void setEsInfoLength(int esInfoLength) {
-		this.esInfoLength = esInfoLength;
 	}
 
 	@Override

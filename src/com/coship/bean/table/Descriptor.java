@@ -2,7 +2,11 @@ package com.coship.bean.table;
 
 import static java.lang.Integer.toHexString;
 
-
+/**
+ * 描述子
+ * @author 910131
+ *
+ */
 public class Descriptor {
 
 
@@ -21,24 +25,14 @@ public class Descriptor {
 	public int getDescriptor_tag() {
 		return descriptor_tag;
 	}
-//	public void setDescriptor_tag(int descriptor_tag) {
-//		this.descriptor_tag = descriptor_tag;
-//	}
 	public int getDescriptor_length() {
 		return descriptor_length;
 	}
 	
-//	public void setDescriptor_length(int descriptor_length) {
-//		this.descriptor_length = descriptor_length;
-//	}
 	
 	public String getData() {
 		return data;
 	}
-
-//	public void setData(String data) {
-//		this.data = data;
-//	}
 
 	@Override
 	public String toString() {

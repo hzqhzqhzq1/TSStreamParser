@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import static java.lang.Integer.toHexString;
 
+/**
+ * SDT表
+ * @author 910131
+ *
+ */
 public class Sdt {
 	/**
 	 * tableId : 8 bit
@@ -120,104 +125,51 @@ public class Sdt {
 		return tableId;
 	}
 
-	public void setTableId(int tableId) {
-		this.tableId = tableId;
-	}
-
 	public int getSectionSyntaxIndicator() {
 		return sectionSyntaxIndicator;
-	}
-
-	public void setSectionSyntaxIndicator(int sectionSyntaxIndicator) {
-		this.sectionSyntaxIndicator = sectionSyntaxIndicator;
 	}
 
 	public int getReservedFutureUse1() {
 		return reservedFutureUse1;
 	}
-
-	public void setReservedFutureUse1(int reservedFutureUse1) {
-		this.reservedFutureUse1 = reservedFutureUse1;
-	}
-
 	public int getReservedFutureUse2() {
 		return reservedFutureUse2;
-	}
-
-	public void setReservedFutureUse2(int reservedFutureUse2) {
-		this.reservedFutureUse2 = reservedFutureUse2;
 	}
 
 	public int getReserved1() {
 		return reserved1;
 	}
 
-	public void setReserved1(int reserved1) {
-		this.reserved1 = reserved1;
-	}
-
 	public int getSectionLength() {
 		return sectionLength;
-	}
-
-	public void setSectionLength(int sectionLength) {
-		this.sectionLength = sectionLength;
 	}
 
 	public int getTransportStreamId() {
 		return transportStreamId;
 	}
 
-	public void setTransportStreamId(int transportStreamId) {
-		this.transportStreamId = transportStreamId;
-	}
-
 	public int getReserved2() {
 		return reserved2;
-	}
-
-	public void setReserved2(int reserved2) {
-		this.reserved2 = reserved2;
 	}
 
 	public int getVersionNumber() {
 		return versionNumber;
 	}
 
-	public void setVersionNumber(int versionNumber) {
-		this.versionNumber = versionNumber;
-	}
-
 	public int getCurrentNextIndicator() {
 		return currentNextIndicator;
-	}
-
-	public void setCurrentNextIndicator(int currentNextIndicator) {
-		this.currentNextIndicator = currentNextIndicator;
 	}
 
 	public int getSectionNumber() {
 		return sectionNumber;
 	}
 
-	public void setSectionNumber(int sectionNumber) {
-		this.sectionNumber = sectionNumber;
-	}
-
 	public int getLastSectionNumber() {
 		return lastSectionNumber;
 	}
 
-	public void setLastSectionNumber(int lastSectionNumber) {
-		this.lastSectionNumber = lastSectionNumber;
-	}
-
 	public int getOriginalNetworkId() {
 		return originalNetworkId;
-	}
-
-	public void setOriginalNerworkId(int originalNetworkId) {
-		this.originalNetworkId = originalNetworkId;
 	}
 
 	public List<SdtService> getSdtServiceList() {
@@ -230,10 +182,6 @@ public class Sdt {
 
 	public int getCrc32() {
 		return crc32;
-	}
-
-	public void setCrc32(int crc32) {
-		this.crc32 = crc32;
 	}
 
 	@Override

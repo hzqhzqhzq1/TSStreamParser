@@ -8,23 +8,30 @@ import com.coship.bean.table.Pat;
 import com.coship.bean.table.PmtPidInfo;
 import com.coship.tableoperate.TableManager;
 
+/**
+ * PAT表管理器
+ * @author 910131
+ *
+ */
 public class PatManager implements TableManager {
 
-	private Pat pat = null;
-	private List<PmtPidInfo> pmtPidInfoList = new ArrayList<PmtPidInfo>();
+	private Pat pat ;
 
 	@Override
 	public int makeTable(List<Section> sectionList) {
+		if(sectionList==null) {
+			return 0;
+		}
+		List<PmtPidInfo> pmtPidInfoList = new ArrayList<PmtPidInfo>();
+
+		System.out.println(sectionList.size());
 		for (int i = 0; i < sectionList.size(); i++) {
 			Section section = sectionList.get(i);
 			byte[] sectionData = section.getSectionData();
 
 			if (pat == null) {
 				pat = new Pat(sectionData);
-			} else {
-				int sectionNumber = sectionData[6] & 0xFF;
-				pat.setSectionNumber(sectionNumber);
-			}
+			} 
 
 			int sectionSize = sectionData.length;
 			int theEffectiveLength = sectionSize - 12;
@@ -44,7 +51,7 @@ public class PatManager implements TableManager {
 				}
 			}
 		}
-
+		System.out.println("**************************PAT解析完成****************************************");
 		pat.setPmtPidInfoList(pmtPidInfoList);
 		return 1;
 	}

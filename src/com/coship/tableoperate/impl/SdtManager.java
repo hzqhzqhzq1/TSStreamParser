@@ -11,43 +11,38 @@ import com.coship.bean.table.Sdt;
 import com.coship.bean.table.SdtService;
 import com.coship.tableoperate.TableManager;
 
+/**
+ * SDT表管理器
+ * @author 910131
+ *
+ */
 public class SdtManager implements TableManager {
 	private Sdt sdt;
 
-	private List<SdtService> sdtServiceList = new ArrayList<SdtService>();
-
 	@Override
 	public int makeTable(List<Section> sectionList) {
+		if(sectionList==null) {
+			return 0;
+		}
+		List<SdtService> sdtServiceList = new ArrayList<SdtService>();
 		for (int i = 0; i < sectionList.size(); i++) {
-
 			Section section = sectionList.get(i);
 			byte[] sectionData = section.getSectionData();
 
 			if (sdt == null) {
 				sdt = new Sdt(sectionData);
 			}
-
 			/*
-			 * to reserved_future_use : 11 byte CRC_32 : 4 byte
-			 *
-			 * need to delete = 15
-			 *
-			 * service_id : 16 bit reserved_future_use : 6 bit eit_schedule_flag : 1 bit
-			 * eit_present_following_flag : 1 bit running_status : 3 bit free_CA_mode : 1
-			 * bit descriptors_loop_length : 12 bit
-			 *
-			 * to descriptors_loop_length : 5 byte Service = 5 + ?
-			 *
-			 * -> descriptors_loop_length tag : 1 byte len : 1 byte data -> len service_type
-			 * : 1 byte service_provider_name_length : 1 byte service_provider_name ->
-			 * name_length service_name_length : 1 byte service_name -> name_length
+			 * 表头 : 11 byte 
+			 *CRC_32 : 4 byte
+			 * 循环部分 = sectionSize-15
 			 */
 			int sectionSize = sectionData.length;
 			int theEffectiveLength = sectionSize - 15;
 
 			for (int j = 0; j < theEffectiveLength;) {
 
-				List<Descriptor> bNDescriptorList = new ArrayList<Descriptor>();
+				List<Descriptor> descriptorList = new ArrayList<Descriptor>();
 
 				int serviceId = (((sectionData[11 + j] & 0xFF) << 8) | (sectionData[12 + j] & 0xFF)) & 0xFFFF;
 				int reservedFutureUse = (sectionData[13 + j] >> 6) & 0x3f;
@@ -125,7 +120,7 @@ public class SdtManager implements TableManager {
 					stringBuilder.delete(0, stringBuilder.length());
 
 					Descriptor bouquetNameDescriptor = new Descriptor(descriptorTag, descriptorLength, data);
-					bNDescriptorList.add(bouquetNameDescriptor);
+					descriptorList.add(bouquetNameDescriptor);
 					k = k + 2 + descriptorLength;
 //					} else {
 //						System.out.println("no bouquet Name");
@@ -138,7 +133,7 @@ public class SdtManager implements TableManager {
 						serviceProviderName, serviceNameLength, serviceName, reservedFutureUse, descriptor_tag,
 						descriptor_length);
 
-				sdtService.setDescriptor(bNDescriptorList);
+				sdtService.setDescriptor(descriptorList);
 				sdtServiceList.add(sdtService);
 
 				j += (5 + descriptorsLoopLength);
@@ -147,7 +142,8 @@ public class SdtManager implements TableManager {
 		}
 		Collections.sort(sdtServiceList);
 		sdt.setSdtServiceList(sdtServiceList);
-		return 0;
+		System.out.println("**************************SDT解析完成****************************************");
+		return 1;
 	}
 
 	public Sdt getSdt() {
@@ -166,10 +162,4 @@ public class SdtManager implements TableManager {
 		}
 		return h;
 	}
-
-//	private String print() {
-//		System.out.println(sdt.toString());
-//		return sdt.getSdtServiceList().get(0).getServiceName();
-//	}
-
 }

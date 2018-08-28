@@ -1,7 +1,10 @@
 package com.coship.bean;
 
-//import java.util.Arrays;
-
+/**
+ * 包
+ * @author 910131
+ *
+ */
 public class Packet {
 	private int syncByte;
 
@@ -60,71 +63,36 @@ public class Packet {
 		return syncByte;
 	}
 
-	public void setSyncByte(int syncByte) {
-		this.syncByte = syncByte;
-	}
-
 	public int getTransportErrorIndicator() {
 		return transportErrorIndicator;
-	}
-
-	public void setTransportErrorIndicator(int transportErrorIndicator) {
-		this.transportErrorIndicator = transportErrorIndicator;
 	}
 
 	public int getPayloadUnitStartIndicator() {
 		return payloadUnitStartIndicator;
 	}
 
-	public void setPayloadUnitStartIndicator(int payloadUnitStartIndicator) {
-		this.payloadUnitStartIndicator = payloadUnitStartIndicator;
-	}
-
 	public int getTransportPriority() {
 		return transportPriority;
-	}
-
-	public void setTransportPriority(int transportPriority) {
-		this.transportPriority = transportPriority;
 	}
 
 	public int getPid() {
 		return pid;
 	}
 
-	public void setPid(int pid) {
-		this.pid = pid;
-	}
-
 	public int getTransportScrambingControl() {
 		return transportScrambingControl;
 	}
 
-	public void setTransportScrambingControl(int transportScrambingControl) {
-		this.transportScrambingControl = transportScrambingControl;
-	}
 
 	public int getAdaptationFieldControl() {
 		return adaptationFieldControl;
-	}
-
-	public void setAdaptationFieldControl(int adaptationFieldControl) {
-		this.adaptationFieldControl = adaptationFieldControl;
 	}
 
 	public int getContinuityCounter() {
 		return continuityCounter;
 	}
 
-	public void setContinuityCounter(int continuityCounter) {
-		this.continuityCounter = continuityCounter;
-	}
-
 	public byte[] getPacket() {
 		return packet;
-	}
-
-	public void setPacket(byte[] packet) {
-		this.packet = packet;
 	}
 }
