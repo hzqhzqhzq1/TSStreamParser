@@ -3,9 +3,9 @@ package com.coship.tableoperate.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.coship.bean.Section;
-import com.coship.bean.table.Pat;
-import com.coship.bean.table.PmtPidInfo;
+import com.coship.bean.SectionBean;
+import com.coship.bean.tables.PatBean;
+import com.coship.bean.tables.PatProgramMapBean;
 import com.coship.tableoperate.TableManager;
 
 /**
@@ -15,22 +15,22 @@ import com.coship.tableoperate.TableManager;
  */
 public class PatManager implements TableManager {
 
-	private Pat pat ;
+	private PatBean pat ;
 
 	@Override
-	public int makeTable(List<Section> sectionList) {
+	public int makeTable(List<SectionBean> sectionList) {
 		if(sectionList==null) {
 			return 0;
 		}
-		List<PmtPidInfo> pmtPidInfoList = new ArrayList<PmtPidInfo>();
+		List<PatProgramMapBean> pmtPidInfoList = new ArrayList<PatProgramMapBean>();
 
 		System.out.println(sectionList.size());
 		for (int i = 0; i < sectionList.size(); i++) {
-			Section section = sectionList.get(i);
+			SectionBean section = sectionList.get(i);
 			byte[] sectionData = section.getSectionData();
 
 			if (pat == null) {
-				pat = new Pat(sectionData);
+				pat = new PatBean(sectionData);
 			} 
 
 			int sectionSize = sectionData.length;
@@ -46,7 +46,7 @@ public class PatManager implements TableManager {
 				} else {
 
 					int programMapPid = (((sectionData[10 + j] & 0x1F) << 8) | (sectionData[11 + j] & 0xFF)) & 0x1FFF;
-					PmtPidInfo pmtPidInfo = new PmtPidInfo(programNumber, programMapPid);
+					PatProgramMapBean pmtPidInfo = new PatProgramMapBean(programNumber, programMapPid);
 					pmtPidInfoList.add(pmtPidInfo);
 				}
 			}
@@ -56,7 +56,7 @@ public class PatManager implements TableManager {
 		return 1;
 	}
 
-	public Pat getPat() {
+	public PatBean getPat() {
 		return pat;
 	};
 

@@ -1,12 +1,14 @@
 package com.coship.bean;
 
+import java.io.Serializable;
 
 /**
  * 段
  * @author 910131
  *
  */
-public class Section {
+public class SectionBean implements Serializable{
+	private static final long serialVersionUID = 1L;
 //	8bit
 	private int tableId;
 //	1bit
@@ -32,10 +34,7 @@ public class Section {
 
 	private byte[] sectionData;
 
-	public Section() {
-	}
-
-	public Section(byte[] sectionBuff) {
+	public SectionBean(byte[] sectionBuff) {
 
 		byte[] s = sectionBuff;
 
@@ -102,22 +101,17 @@ public class Section {
 		return sectionData;
 	}
 	
-	private static String byte2hex(byte [] buffer){  
-        String h = "";  
-          
-        for(int i = 0; i < buffer.length; i++){  
-            String temp = Integer.toHexString(buffer[i] & 0xFF);  
+	@Override
+	public String toString() {
+		String sectionString = "";  
+        for(int i = 0; i < sectionData.length; i++){  
+            String temp = Integer.toHexString(sectionData[i] & 0xFF);  
             if(temp.length() == 1){  
                 temp = "0" + temp;  
             }  
-            h = h + " "+ temp;  
+            sectionString = sectionString + " "+ temp;  
         }  
-        return h;  
-    }  
-
-	@Override
-	public String toString() {
-		return byte2hex(sectionData);
+        return sectionString;  
 	}
 
 }

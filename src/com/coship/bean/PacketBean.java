@@ -1,11 +1,16 @@
 package com.coship.bean;
 
+import java.io.Serializable;
+
 /**
  * 包
+ * 
  * @author 910131
  *
  */
-public class Packet {
+public class PacketBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private int syncByte;
 
 	private int transportErrorIndicator;
@@ -24,7 +29,7 @@ public class Packet {
 
 	private byte[] packet;
 
-	public Packet(byte[] b) {
+	public PacketBean(byte[] b) {
 		this.syncByte = b[0] & 0xFF;
 		this.transportErrorIndicator = (b[1] >> 7) & 0x1;
 		this.payloadUnitStartIndicator = (b[1] >> 6) & 0x1;
@@ -36,27 +41,6 @@ public class Packet {
 
 		this.packet = b;
 
-	}
-	
-	private static String byte2hex(byte [] buffer){  
-        String h = "";  
-          
-        for(int i = 0; i < buffer.length; i++){  
-            String temp = Integer.toHexString(buffer[i] & 0xFF);  
-            if(temp.length() == 1){  
-                temp = "0" + temp;  
-            }  
-            h = h + " "+ temp;  
-        }  
-          
-        return h;  
-          
-    }  
- 
-
-	@Override
-	public String toString() {
-		return byte2hex(packet);
 	}
 
 	public int getSyncByte() {
@@ -83,7 +67,6 @@ public class Packet {
 		return transportScrambingControl;
 	}
 
-
 	public int getAdaptationFieldControl() {
 		return adaptationFieldControl;
 	}
@@ -94,5 +77,18 @@ public class Packet {
 
 	public byte[] getPacket() {
 		return packet;
+	}
+
+	@Override
+	public String toString() {
+		String packetString = "";
+		for (int i = 0; i < packet.length; i++) {
+			String temp = Integer.toHexString(packet[i] & 0xFF);
+			if (temp.length() == 1) {
+				temp = "0" + temp;
+			}
+			packetString = packetString + " " + temp;
+		}
+		return packetString;
 	}
 }

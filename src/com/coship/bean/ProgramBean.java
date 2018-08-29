@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author 910131
  *
  */
-public class Program implements Serializable{
+public class ProgramBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int pid;
@@ -17,7 +17,7 @@ public class Program implements Serializable{
 	private String programGroup;
 	private String programDescription;
 	
-	public Program(int pid,int programNumber) {
+	public ProgramBean(int pid,int programNumber) {
 		this.pid = pid;
 		this.programNumber = programNumber;
 		String unKnown = "unknown";

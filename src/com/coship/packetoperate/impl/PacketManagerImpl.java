@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.coship.bean.Packet;
+import com.coship.bean.PacketBean;
 import com.coship.packetoperate.PacketManager;
 
 /**
@@ -20,7 +20,7 @@ import com.coship.packetoperate.PacketManager;
  */
 public class PacketManagerImpl implements PacketManager {
 
-	private Map<Integer, List<Packet>> packetMap = null;
+	private Map<Integer, List<PacketBean>> packetMap = null;
 
 	private String inputFilePath;
 	private int packetStartPosition = -1;
@@ -29,11 +29,11 @@ public class PacketManagerImpl implements PacketManager {
 	public PacketManagerImpl(String inputFilePath) {
 		super();
 		this.inputFilePath = inputFilePath;
-		getPacketLengthAndStartPosition();
-		getPacket();
+		packetAttributesObtain();
+		sortPacket2MapByPid();
 	}
 
-	private int getPacketLengthAndStartPosition() {
+	private void packetAttributesObtain() {
 		File file = new File(inputFilePath);
 		FileInputStream fis = null;
 		try {
@@ -53,7 +53,7 @@ public class PacketManagerImpl implements PacketManager {
 						// 长度不足情况
 						if (lg != PACKET_LENTH_188 - 1) {
 							System.out.println("====跳转187字节失败=====");
-							return -1;
+							return;
 						}
 						// 读取跳过187字节后的字节
 						tmp = fis.read();
@@ -81,9 +81,8 @@ public class PacketManagerImpl implements PacketManager {
 						long lg = fis.skip(PACKET_LENTH_204 - 1);
 						if (lg != PACKET_LENTH_204 - 1) {
 //							System.out.println("====跳转203字节失败=====");
-							return -1;
+							return;
 						}
-
 						tmp = fis.read();
 //						System.out.println("====已经跳过" + PACKET_LENTH_204 * (i + 1) + "byte");
 						if (tmp != PACKET_HEADER_SYNC_BYTE) {
@@ -115,16 +114,14 @@ public class PacketManagerImpl implements PacketManager {
 
 		}
 		System.out.println("包长:" + packetLength + "  开始位置为：" + packetStartPosition);
-		return packetLength;
-
 	}
 
-	private Map<Integer, List<Packet>> getPacket() {
+	private Map<Integer, List<PacketBean>> sortPacket2MapByPid() {
 		long startTime = System.currentTimeMillis();
 		packetMap = new HashMap<>();
 
 		if (packetLength == -1 || packetStartPosition == -1) {
-			getPacketLengthAndStartPosition();
+			packetAttributesObtain();
 		}
 
 		File file = new File(inputFilePath);
@@ -132,14 +129,14 @@ public class PacketManagerImpl implements PacketManager {
 		try {
 //			缓冲区大小调优
 			/*
-			 * 默认大小8K-->缓冲区大小128K：
+			 * 默认大小8K-->缓冲区大小64K：
 			 *	800m-->3.114-3.5s 
 			 *	33m -->0.97-0.99s
 			 *	159m -->0.53-0.56s
 			 *	181m -->0.73-0.77s
 			 *	解析速度大约为 250-300 mb/s
 			 */
-			bis = new BufferedInputStream(new FileInputStream(file), 2*8 * 8 * 1024);//128K
+			bis = new BufferedInputStream(new FileInputStream(file), 8 * 8 * 1024);//128K
 
 			if (bis.skip(packetStartPosition) != packetStartPosition) {
 				System.out.println("packetStartPosition:" + packetStartPosition);
@@ -156,9 +153,9 @@ public class PacketManagerImpl implements PacketManager {
 					break;
 				}
 				if (buff[0] == PACKET_HEADER_SYNC_BYTE) {
-					Packet packet = new Packet(buff);
+					PacketBean packet = new PacketBean(buff);
 					if (!packetMap.containsKey(packet.getPid())) {
-						List<Packet> list = new ArrayList<Packet>();
+						List<PacketBean> list = new ArrayList<PacketBean>();
 						list.add(packet);
 						packetMap.put(packet.getPid(), list);
 					} else {
@@ -187,7 +184,7 @@ public class PacketManagerImpl implements PacketManager {
 	}
 
 	@Override
-	public List<Packet> getPacketOfPid(int pid) {
+	public List<PacketBean> getPacketListByPid(int pid) {
 		return packetMap.get(pid);
 	}
 }

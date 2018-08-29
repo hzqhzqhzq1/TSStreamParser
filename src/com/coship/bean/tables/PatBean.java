@@ -1,6 +1,8 @@
-package com.coship.bean.table;
+package com.coship.bean.tables;
 
 import static java.lang.Integer.toHexString;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +12,10 @@ import java.util.List;
  * @author 910131
  *
  */
-public class Pat {
+public class PatBean implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * tableId : 8 bit
 	 */
@@ -66,7 +71,7 @@ public class Pat {
 	 */
 	private int lastSectionNumber;
 
-	private List<PmtPidInfo> pmtPidInfoList = new ArrayList<>();
+	private List<PatProgramMapBean> patProgramMapList = new ArrayList<>();
 
 	/**
 	 * reserved_3 : 3 bit
@@ -83,7 +88,7 @@ public class Pat {
 	 */
 	private int crc32;
 
-	public Pat(byte[] sectionData) {
+	public PatBean(byte[] sectionData) {
 		super();
 		int tableId = sectionData[0] & 0xFF;
 		int sectionSyntaxIndicator = (sectionData[1] >> 7) & 0x1;
@@ -163,12 +168,12 @@ public class Pat {
 		return lastSectionNumber;
 	}
 
-	public List<PmtPidInfo> getPmtPidInfoList() {
-		return pmtPidInfoList;
+	public List<PatProgramMapBean> getPmtPidInfoList() {
+		return patProgramMapList;
 	}
 
-	public void setPmtPidInfoList(List<PmtPidInfo> pmtPidInfoList) {
-		this.pmtPidInfoList = pmtPidInfoList;
+	public void setPmtPidInfoList(List<PatProgramMapBean> pmtPidInfoList) {
+		this.patProgramMapList = pmtPidInfoList;
 	}
 
 	public int getReserved3() {
@@ -204,9 +209,9 @@ public class Pat {
 		if (networkPid != 0) {
 			stringBuilder.append("network_Pid = 0x" + toHexString(networkPid) + "\n");
 		}
-		Collections.sort(pmtPidInfoList);
+		Collections.sort(patProgramMapList);
 		stringBuilder.append("\nPMT表PID信息：\n");
-		for (PmtPidInfo p : pmtPidInfoList) {
+		for (PatProgramMapBean p : patProgramMapList) {
 			stringBuilder.append("节目" + (pmtOrderId++) + ": " + p.toString());
 		}
 		stringBuilder.append("\nCRC_32 = 0x" + toHexString(crc32) + "\n" + "--------------------------------");

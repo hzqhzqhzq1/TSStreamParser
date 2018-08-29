@@ -1,15 +1,19 @@
-package com.coship.bean.table;
+package com.coship.bean.tables;
 
 import java.util.ArrayList;
 import java.util.List;
 import static java.lang.Integer.toHexString;
+
+import java.io.Serializable;
 
 /**
  * SDT表
  * @author 910131
  *
  */
-public class Sdt {
+public class SdtBean implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * tableId : 8 bit
 	 */
@@ -75,14 +79,14 @@ public class Sdt {
 	 */
 	private int reservedFutureUse2;
 
-	private List<SdtService> sdtServiceList = new ArrayList<>();
+	private List<SdtServiceBean> sdtServiceList = new ArrayList<>();
 
 	/**
 	 * CRC_32 : 32 bit
 	 */
 	private int crc32;
 
-	public Sdt(byte[] sectionData) {
+	public SdtBean(byte[] sectionData) {
 		super();
 		int tableId = sectionData[0] & 0xFF;
 		int sectionSyntaxIndicator = (sectionData[1] >> 7) & 0x1;
@@ -172,11 +176,11 @@ public class Sdt {
 		return originalNetworkId;
 	}
 
-	public List<SdtService> getSdtServiceList() {
+	public List<SdtServiceBean> getSdtServiceList() {
 		return sdtServiceList;
 	}
 
-	public void setSdtServiceList(List<SdtService> sdtServiceList) {
+	public void setSdtServiceList(List<SdtServiceBean> sdtServiceList) {
 		this.sdtServiceList = sdtServiceList;
 	}
 
@@ -198,7 +202,7 @@ public class Sdt {
 				+ toHexString(sectionNumber) + "\n" + "last_section_number = 0x" + toHexString(lastSectionNumber) + "\n"
 				+ "original_network_id = 0x" + toHexString(originalNetworkId) + "\n" + "reserved_future_use = 0x"
 				+ toHexString(reservedFutureUse2) + "\n");
-		for (SdtService s : sdtServiceList) {
+		for (SdtServiceBean s : sdtServiceList) {
 			stringBuilder.append("业务描述" + (sdtServiceOrderId++) + " : "+s.toString());
 		}
 		

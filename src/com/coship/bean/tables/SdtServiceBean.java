@@ -1,14 +1,19 @@
-package com.coship.bean.table;
+package com.coship.bean.tables;
 
 import java.util.List;
 import static java.lang.Integer.toHexString;
+
+import java.io.Serializable;
 
 /**
  * SDT业务描述
  * @author 910131
  *
  */
-public class SdtService implements Comparable<SdtService>{
+public class SdtServiceBean implements Comparable<SdtServiceBean>,Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * service_id : 16 bit
 	 */
@@ -82,9 +87,9 @@ public class SdtService implements Comparable<SdtService>{
 	 */
 	private String serviceName;
 
-	private List<Descriptor> descriptorList;
+	private List<DescriptorBean> descriptorList;
 
-	public SdtService(int serviceId, int eitScheduleFlag, int eitPresentFollowingFlag, int runningStatus,
+	public SdtServiceBean(int serviceId, int eitScheduleFlag, int eitPresentFollowingFlag, int runningStatus,
 			int freeCaMode, int descriptorsLoopLength, int serviceType, int serviceProviderNameLength,
 			String serviceProviderName, int serviceNameLength, String serviceName, int reservedFutureUse,
 			int descriptor_tag, int descriptor_length) {
@@ -163,11 +168,11 @@ public class SdtService implements Comparable<SdtService>{
 		return descriptorLength;
 	}
 
-	public List<Descriptor> getDescriptor() {
+	public List<DescriptorBean> getDescriptor() {
 		return descriptorList;
 	}
 
-	public void setDescriptor(List<Descriptor> descriptorList) {
+	public void setDescriptor(List<DescriptorBean> descriptorList) {
 		this.descriptorList = descriptorList;
 	}
 
@@ -185,7 +190,7 @@ public class SdtService implements Comparable<SdtService>{
 					"		descriptor_length = "+toHexString(descriptorLength)+"\n"+"		service_type = 0x"+toHexString(serviceType)+
 					"\n"+"		service_provider_name_length = 0x"+toHexString(serviceProviderNameLength)+"\n"+"		service_provider_name = "+
 					serviceProviderName+"\n"+"		service_name_length = 0x"+toHexString(serviceNameLength)+"\n"+"		service_name = "+serviceName+"  ]\n");
-			for(Descriptor d:descriptorList) {
+			for(DescriptorBean d:descriptorList) {
 				if(d.getDescriptor_tag()==0x47) {
 					stringBuilder.append("	bouquet_name_descriptor :\n");
 				}else {
@@ -209,7 +214,7 @@ public class SdtService implements Comparable<SdtService>{
 	}
 
 	@Override
-	public int compareTo(SdtService o) {
+	public int compareTo(SdtServiceBean o) {
 		return this.serviceId > o.serviceId ? 1 : (this.serviceId == o.serviceId ? 0 : -1);
 	}
 

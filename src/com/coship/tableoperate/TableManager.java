@@ -2,10 +2,10 @@ package com.coship.tableoperate;
 
 import java.util.List;
 
-import com.coship.bean.Section;
+import com.coship.bean.SectionBean;
 
 public interface TableManager {
 	
-	int makeTable(List<Section> sectionList) ;
+	int makeTable(List<SectionBean> sectionList) ;
 
 }

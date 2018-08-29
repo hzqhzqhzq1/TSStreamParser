@@ -1,6 +1,8 @@
-package com.coship.bean.table;
+package com.coship.bean.tables;
 
 import static java.lang.Integer.toHexString;
+
+import java.io.Serializable;
 
 /**
  * PMT表单元流
@@ -8,7 +10,9 @@ import static java.lang.Integer.toHexString;
  * @author 910131
  *
  */
-public class ElementStream {
+public class ElementStreamBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * stream_type : 8 bit
@@ -26,7 +30,7 @@ public class ElementStream {
 	 */
 	private int esInfoLength;
 
-	public ElementStream(int streamType, int elementaryPid, int esInfoLength) {
+	public ElementStreamBean(int streamType, int elementaryPid, int esInfoLength) {
 		super();
 		this.streamType = streamType;
 		this.esPid = elementaryPid;

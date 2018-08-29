@@ -2,7 +2,7 @@ package com.coship.packetoperate;
 
 import java.util.List;
 
-import com.coship.bean.Packet;
+import com.coship.bean.PacketBean;
 
 public interface PacketManager {
 	static final int PACKET_HEADER_SYNC_BYTE = 0x47;
@@ -10,5 +10,5 @@ public interface PacketManager {
 	static final int PACKET_LENTH_204 = 204;
 	static final int CYCLE_TEN_TIMES = 10;
 	
-	List<Packet> getPacketOfPid(int pid);
+	List<PacketBean> getPacketListByPid(int pid);
 }

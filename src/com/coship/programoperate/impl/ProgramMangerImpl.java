@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.coship.bean.Program;
-import com.coship.bean.table.Descriptor;
-import com.coship.bean.table.Pat;
-import com.coship.bean.table.PmtPidInfo;
-import com.coship.bean.table.Sdt;
-import com.coship.bean.table.SdtService;
+import com.coship.bean.ProgramBean;
+import com.coship.bean.tables.DescriptorBean;
+import com.coship.bean.tables.PatBean;
+import com.coship.bean.tables.PatProgramMapBean;
+import com.coship.bean.tables.SdtBean;
+import com.coship.bean.tables.SdtServiceBean;
 import com.coship.programoperate.ProgramManager;
 
 /**
@@ -19,29 +19,29 @@ import com.coship.programoperate.ProgramManager;
  *
  */
 public class ProgramMangerImpl implements ProgramManager {
-	List<Program> programList = new ArrayList<Program>();
+	List<ProgramBean> programList = new ArrayList<ProgramBean>();
 
 	@Override
-	public List<Program> makeProgramList(Pat pat, Sdt sdt) {
-		List<Program> programList = new ArrayList<Program>();
-		List<PmtPidInfo> pmtPidInfoList = pat.getPmtPidInfoList();
-		List<SdtService> sdtServiceList = sdt.getSdtServiceList();
-		Map<Integer, Program> pm = new HashMap<>();
+	public List<ProgramBean> makeProgramList(PatBean pat, SdtBean sdt) {
+		List<ProgramBean> programList = new ArrayList<ProgramBean>();
+		List<PatProgramMapBean> pmtPidInfoList = pat.getPmtPidInfoList();
+		List<SdtServiceBean> sdtServiceList = sdt.getSdtServiceList();
+		Map<Integer, ProgramBean> pm = new HashMap<>();
 
-		for (PmtPidInfo pp : pmtPidInfoList) {
-			Program program = new Program(pp.getProgramMapPid(), pp.getProgramNumber());
+		for (PatProgramMapBean pp : pmtPidInfoList) {
+			ProgramBean program = new ProgramBean(pp.getProgramMapPid(), pp.getProgramNumber());
 			pm.put(pp.getProgramNumber(), program);
 			programList.add(program);
 		}
-		for (SdtService ss : sdtServiceList) {
-			Program program =pm.get(ss.getServiceId());
+		for (SdtServiceBean ss : sdtServiceList) {
+			ProgramBean program =pm.get(ss.getServiceId());
 			
 			if(program==null) {
 				continue;
 			}
 			program.setProgramName(
 					ss.getServiceName());
-			for (Descriptor d : ss.getDescriptor()) {
+			for (DescriptorBean d : ss.getDescriptor()) {
 				if (d.getDescriptor_tag() == 0x47) {
 					if(d.getData().equals("付费节目")|d.getData().equals("免费节目")) {
 						program.setProgramType(d.getData());

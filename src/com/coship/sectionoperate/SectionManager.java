@@ -2,8 +2,8 @@ package com.coship.sectionoperate;
 
 import java.util.List;
 
-import com.coship.bean.Packet;
-import com.coship.bean.Section;
+import com.coship.bean.PacketBean;
+import com.coship.bean.SectionBean;
 
 public interface SectionManager {
 	public static final int PACKET_HEADER_LENGTH = 4;
@@ -17,7 +17,7 @@ public interface SectionManager {
 //	List<Section> getSectionList();
 	
 	
-	List<Section> matchSection(List<Packet> packetList,int inputTableId);
+	List<SectionBean> matchSection(List<PacketBean> packetList,int inputTableId);
 	
 	
 }

@@ -3,8 +3,8 @@ package com.coship.sectionoperate.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.coship.bean.Packet;
-import com.coship.bean.Section;
+import com.coship.bean.PacketBean;
+import com.coship.bean.SectionBean;
 import com.coship.sectionoperate.SectionManager;
 
 /**
@@ -27,16 +27,16 @@ public class SectionManagerImpl implements SectionManager {
 	private int[] mCursor;
 	private int[] mNextContinuityCounter;
 
-	private List<Section> mSectionList = new ArrayList<Section>();
+	private List<SectionBean> mSectionList = new ArrayList<SectionBean>();
 
 	@Override
-	public List<Section> matchSection(List<Packet> packetList, int inputTableId) {
+	public List<SectionBean> matchSection(List<PacketBean> packetList, int inputTableId) {
 		if (packetList == null) {
 			return null;
 		}
 		for (int tmp = 0; tmp < packetList.size(); tmp++) {
 			section_start_position = 5;
-			Packet p = packetList.get(tmp);
+			PacketBean p = packetList.get(tmp);
 			if (p.getTransportErrorIndicator() == 0x1) {
 				System.out.println("The packet is Error");
 				continue;
@@ -48,7 +48,6 @@ public class SectionManagerImpl implements SectionManager {
 			int adaptationFieldControl = p.getAdaptationFieldControl();
 			int coutinuityCounter = p.getContinuityCounter();
 			int adaptationFieldLength = 0;
-
 			if (adaptationFieldControl == 3) {
 				adaptationFieldLength = packet[4] & 0xff;
 				section_start_position += adaptationFieldLength + 1;
@@ -65,38 +64,21 @@ public class SectionManagerImpl implements SectionManager {
 				int sectionNumber = packet[section_start_position + 6] & 0xFF;
 				int lastSectionNumber = packet[section_start_position + 7] & 0xFF;
 				if (tableId != inputTableId) {
-					/*
-					 * TableId不一致
-					 */
 					continue;
 				}
 				thisPacketEffectiveLength = getEffectiveLenth(packetLength, SKIP_ONE, adaptationFieldLength);
-
 //				sectionLength为sectionLength字段后长度
 				int sectionSize = sectionLength + 3;
-
-				/*
-				 * 判断VersionNumber
-				 */
 				if (mVersionNumber == -1 || mVersionNumber != versionNumber) {
 					initData(versionNumber, lastSectionNumber);
 				}
-
 //				根据sectionNum判断是否已添加到mList中
 				int num = mCursor[sectionNumber];
-//				System.out.println("当前包SectionNumber:"+sectionNumber);
-//				System.out.println("num = "+num);
-
 				if (num == 0) {
-//					System.out.println("sectionSize:"+sectionSize);
-//					System.out.println("sectionNumber:=========>"+ sectionNumber);
 					mList[sectionNumber] = new byte[sectionSize];
 				} else {
-//					sectionRNum++;
-//					System.out.println("重复包次数："+sectionRNum);
 					continue;
 				}
-
 				if (sectionSize <= thisPacketEffectiveLength) {
 					loadSection(packet, sectionNumber, sectionSize);
 				} else {
@@ -104,11 +86,11 @@ public class SectionManagerImpl implements SectionManager {
 							sectionNumber);
 				}
 			}
+			
 //			非Section首包
 			else {
 				section_start_position--;
 				if (mVersionNumber == -1) {
-//					System.out.println("no versionNumber");
 					continue;
 				}
 				thisPacketEffectiveLength = getEffectiveLenth(packetLength, 0, adaptationFieldLength);
@@ -120,7 +102,6 @@ public class SectionManagerImpl implements SectionManager {
 					}
 				}
 				if (unFinishSectionNumber == -1) {
-//					System.out.println("没有未完成组装的Section__退出");
 					continue;
 				}
 				int sectionSize = mList[unFinishSectionNumber].length;
@@ -221,7 +202,7 @@ public class SectionManagerImpl implements SectionManager {
 		}
 		// -2 表示当前 sectionNumber 的数据已写完
 		mNextContinuityCounter[sectionNumber] = -2;
-		Section section = new Section(mList[sectionNumber]);
+		SectionBean section = new SectionBean(mList[sectionNumber]);
 		mSectionList.add(section);
 	}
 }

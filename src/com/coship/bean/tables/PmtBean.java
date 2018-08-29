@@ -1,7 +1,8 @@
-package com.coship.bean.table;
+package com.coship.bean.tables;
 
 import static java.lang.Integer.toHexString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,9 @@ import java.util.List;
  * @author 910131
  *
  */
-public class Pmt implements Comparable<Pmt> {
+public class PmtBean implements Comparable<PmtBean>,Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * table_id : 8 bit
@@ -62,14 +65,14 @@ public class Pmt implements Comparable<Pmt> {
 	 */
 	private int programInfoLength;
 
-	private List<ElementStream> elementStreamList = new ArrayList<>();
+	private List<ElementStreamBean> elementStreamList = new ArrayList<>();
 
 	/**
 	 * CRC_32 : 32 bit
 	 */
 	private int crc32;
 
-	public Pmt(byte[] sectionData) {
+	public PmtBean(byte[] sectionData) {
 		super();
 		int tableId = sectionData[0] & 0xFF;
 		int sectionSyntaxIndicator = (sectionData[1] >> 7) & 0x1;
@@ -142,11 +145,11 @@ public class Pmt implements Comparable<Pmt> {
 		return programInfoLength;
 	}
 
-	public List<ElementStream> getElementStreamList() {
+	public List<ElementStreamBean> getElementStreamList() {
 		return elementStreamList;
 	}
 
-	public void setElementStreamList(List<ElementStream> elementStreamList) {
+	public void setElementStreamList(List<ElementStreamBean> elementStreamList) {
 		this.elementStreamList = elementStreamList;
 	}
 
@@ -155,7 +158,7 @@ public class Pmt implements Comparable<Pmt> {
 	}
 
 	@Override
-	public int compareTo(Pmt o) {
+	public int compareTo(PmtBean o) {
 		return this.programNumber > o.programNumber ? 1 : (this.programNumber == o.programNumber ? 0 : -1);
 	}
 
@@ -170,7 +173,7 @@ public class Pmt implements Comparable<Pmt> {
 				+ toHexString(currentNextIndicator) + "\n" + "section_number : 0x" + toHexString(sectionNumber) + "\n"
 				+ "last_section_number : 0x" + toHexString(lastSectionNumber) + "\n" + "PCR_PID : 0x" + toHexString(pcrPid)
 				+ "\n" + "program_info_length : 0x" + toHexString(programInfoLength) + "\n\n");
-		for (ElementStream elementStream : elementStreamList) {
+		for (ElementStreamBean elementStream : elementStreamList) {
 			stringBuilder.append("单元流" + (esOrderId++) + ": " + elementStream.toString());
 		}
 		stringBuilder.append("\n" + "CRC_32: 0x" + toHexString(crc32) + "\n--------------------------------");

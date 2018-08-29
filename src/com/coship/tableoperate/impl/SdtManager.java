@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.coship.bean.Section;
-import com.coship.bean.table.Descriptor;
-import com.coship.bean.table.Sdt;
-import com.coship.bean.table.SdtService;
+import com.coship.bean.SectionBean;
+import com.coship.bean.tables.DescriptorBean;
+import com.coship.bean.tables.SdtBean;
+import com.coship.bean.tables.SdtServiceBean;
 import com.coship.tableoperate.TableManager;
 
 /**
@@ -17,20 +17,20 @@ import com.coship.tableoperate.TableManager;
  *
  */
 public class SdtManager implements TableManager {
-	private Sdt sdt;
+	private SdtBean sdt;
 
 	@Override
-	public int makeTable(List<Section> sectionList) {
+	public int makeTable(List<SectionBean> sectionList) {
 		if(sectionList==null) {
 			return 0;
 		}
-		List<SdtService> sdtServiceList = new ArrayList<SdtService>();
+		List<SdtServiceBean> sdtServiceList = new ArrayList<SdtServiceBean>();
 		for (int i = 0; i < sectionList.size(); i++) {
-			Section section = sectionList.get(i);
+			SectionBean section = sectionList.get(i);
 			byte[] sectionData = section.getSectionData();
 
 			if (sdt == null) {
-				sdt = new Sdt(sectionData);
+				sdt = new SdtBean(sectionData);
 			}
 			/*
 			 * 表头 : 11 byte 
@@ -42,7 +42,7 @@ public class SdtManager implements TableManager {
 
 			for (int j = 0; j < theEffectiveLength;) {
 
-				List<Descriptor> descriptorList = new ArrayList<Descriptor>();
+				List<DescriptorBean> descriptorList = new ArrayList<DescriptorBean>();
 
 				int serviceId = (((sectionData[11 + j] & 0xFF) << 8) | (sectionData[12 + j] & 0xFF)) & 0xFFFF;
 				int reservedFutureUse = (sectionData[13 + j] >> 6) & 0x3f;
@@ -119,7 +119,7 @@ public class SdtManager implements TableManager {
 
 					stringBuilder.delete(0, stringBuilder.length());
 
-					Descriptor bouquetNameDescriptor = new Descriptor(descriptorTag, descriptorLength, data);
+					DescriptorBean bouquetNameDescriptor = new DescriptorBean(descriptorTag, descriptorLength, data);
 					descriptorList.add(bouquetNameDescriptor);
 					k = k + 2 + descriptorLength;
 //					} else {
@@ -128,7 +128,7 @@ public class SdtManager implements TableManager {
 //					}
 				}
 
-				SdtService sdtService = new SdtService(serviceId, eitScheduleFlag, eitPresentFollowingFlag,
+				SdtServiceBean sdtService = new SdtServiceBean(serviceId, eitScheduleFlag, eitPresentFollowingFlag,
 						runningStatus, freeCaMode, descriptorsLoopLength, serviceType, serviceProviderNameLength,
 						serviceProviderName, serviceNameLength, serviceName, reservedFutureUse, descriptor_tag,
 						descriptor_length);
@@ -146,7 +146,7 @@ public class SdtManager implements TableManager {
 		return 1;
 	}
 
-	public Sdt getSdt() {
+	public SdtBean getSdt() {
 		return sdt;
 	}
 

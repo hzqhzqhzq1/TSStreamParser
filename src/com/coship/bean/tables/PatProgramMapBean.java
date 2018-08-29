@@ -1,11 +1,15 @@
-package com.coship.bean.table;
+package com.coship.bean.tables;
+
+import java.io.Serializable;
 
 /**
  * PAT表中的PMTPID信息
  * @author 910131
  *
  */
-public class PmtPidInfo implements Comparable<PmtPidInfo> {
+public class PatProgramMapBean implements Comparable<PatProgramMapBean>,Serializable {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * program_number : 16 bit
 	 */
@@ -16,7 +20,7 @@ public class PmtPidInfo implements Comparable<PmtPidInfo> {
 	 */
 	private int programMapPid;
 
-	public PmtPidInfo(int programNumber, int programMapPid) {
+	public PatProgramMapBean(int programNumber, int programMapPid) {
 		super();
 		this.programNumber = programNumber;
 		this.programMapPid = programMapPid;
@@ -30,7 +34,7 @@ public class PmtPidInfo implements Comparable<PmtPidInfo> {
 		return programMapPid;
 	}
 	@Override
-	public int compareTo(PmtPidInfo o) {
+	public int compareTo(PatProgramMapBean o) {
 		return this.programNumber > o.programNumber ? 1 : (this.programNumber == o.programNumber ? 0 : -1);
 	}
 

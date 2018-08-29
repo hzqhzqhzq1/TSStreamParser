@@ -2,11 +2,11 @@ package com.coship.programoperate;
 
 import java.util.List;
 
-import com.coship.bean.Program;
-import com.coship.bean.table.Pat;
-import com.coship.bean.table.Sdt;
+import com.coship.bean.ProgramBean;
+import com.coship.bean.tables.PatBean;
+import com.coship.bean.tables.SdtBean;
 
 public interface ProgramManager {
 
-	List<Program> makeProgramList(Pat pat,Sdt sdt);
+	List<ProgramBean> makeProgramList(PatBean pat,SdtBean sdt);
 }
